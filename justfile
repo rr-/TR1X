@@ -4,6 +4,9 @@ HOST_USER_GID := `id -g`
 
 default: (build-win "debug")
 
+_docker_push tag:
+    docker push {{tag}}
+
 _docker_build dockerfile tag force="0":
     #!/usr/bin/env sh
     docker images | grep {{tag}} >/dev/null
@@ -29,15 +32,41 @@ _docker_run *args:
         {{args}}
 
 
-image-win force="1":       (_docker_build "docker/game-win/Dockerfile" "rrdash/tr1x" force)
-image-linux force="1":     (_docker_build "docker/game-linux/Dockerfile" "rrdash/tr1x-linux" force)
-image-config force="1":    (_docker_build "docker/config/Dockerfile" "rrdash/tr1x-config" force)
-image-installer force="1": (_docker_build "docker/installer/Dockerfile" "rrdash/tr1x-installer" force)
+image-linux force="1":         (_docker_build "tools/docker/game-linux/Dockerfile" "rrdash/tr1x-linux" force)
+image-win force="1":           (_docker_build "tools/docker/game-win/Dockerfile" "rrdash/tr1x" force)
+image-win-config force="1":    (_docker_build "tools/docker/config/Dockerfile" "rrdash/tr1x-config" force)
+image-win-installer force="1": (_docker_build "tools/docker/installer/Dockerfile" "rrdash/tr1x-installer" force)
 
-build-win target='debug':   (image-win "0")       (_docker_run "-e" "TARGET="+target "rrdash/tr1x")
-build-linux target='debug': (image-linux "0")     (_docker_run "-e" "TARGET="+target "rrdash/tr1x-linux")
-build-config:               (image-config "0")    (_docker_run "rrdash/tr1x-config")
-build-installer:            (image-installer "0") (_docker_run "rrdash/tr1x-installer")
+push-image-linux:              (_docker_push "rrdash/tr1x-linux")
+push-image-win:                (_docker_push "rrdash/tr1x")
+
+build-linux target='debug':    (image-linux "0")         (_docker_run "-e" "TARGET="+target "rrdash/tr1x-linux")
+build-win target='debug':      (image-win "0")           (_docker_run "-e" "TARGET="+target "rrdash/tr1x")
+build-win-config:              (image-win-config "0")    (_docker_run "rrdash/tr1x-config")
+build-win-installer:           (image-win-installer "0") (_docker_run "rrdash/tr1x-installer")
+
+package-linux: (build-linux "release")
+    #!/bin/sh
+    zip_name=$(tools/generate_version)-Linux.zip
+    7z a "${zip_name}" ./data/ship/* ./build/linux/TR1X
+    echo "Created ${zip_name}"
+package-win zip_name="": (build-win "release") (build-win-config)
+    #!/bin/sh
+    zip_name="{{zip_name}}"
+    if [[ -z zip_name ]]; then
+        zip_name=$(tools/generate_version)-Windows.zip
+    fi
+    7z a "${zip_name}" ./data/ship/* ./build/win/TR1X.exe ./tools/config/out/TR1X_ConfigTool.exe
+    echo "Created ${zip_name}"
+package-win-installer: (package-win "tools/installer/Installer/Resources/release.zip") (build-win-installer)
+    #!/bin/sh
+    git checkout "tools/installer/Installer/Resources/release.zip"
+    exe_name=$(tools/generate_version)-Installer.exe
+    cp tools/installer/out/TR1X_Installer.exe "${exe_name}"
+    echo "Created ${exe_ame}"
+
+output-current-changelog:
+    tools/output_current_changelog
 
 clean:
     -find build/ -type f -delete

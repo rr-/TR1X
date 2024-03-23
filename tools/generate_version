@@ -19,7 +19,10 @@ def generate_version() -> str:
 def main() -> None:
     args = parse_args()
     version = generate_version()
-    args.output.write_text(version)
+    if args.output:
+        args.output.write_text(version)
+    else:
+        print(version)
 
 
 if __name__ == "__main__":
