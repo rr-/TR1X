@@ -9,6 +9,8 @@ on:
         required: false
         default: false
 
+  workflow_dispatch:
+
 env:
   FFMPEG_INSTALL_FINAL: /opt/local
   FFMPEG_INSTALL_TMP_UNIVERSAL: /tmp/install_universal
