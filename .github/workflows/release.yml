@@ -63,16 +63,19 @@ on:
 jobs:
   package_multiplatform:
     name: Build release assets
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runner }}
     if: vars.RELEASE_ENABLE == 'true'
     strategy:
       matrix:
         include:
           - platform: linux
+            runner: ubuntu-latest
             just_target: package-linux
           - platform: win
+            runner: windows-latest
             just_target: package-win-all
           - platform: win installer
+            runner: windows-latest
             just_target: package-win-installer
     steps:
       - name: Install dependencies
