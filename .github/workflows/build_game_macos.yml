@@ -1,4 +1,4 @@
-name: Build macOS app bundle and .dmg installer image
+name: Build the game and the installer (macOS)
 
 on:
   workflow_call:
@@ -268,7 +268,7 @@ jobs:
       - name: Upload signed+notarized installer image
         uses: actions/upload-artifact@v4
         with:
-          name: packaged_asset-mac
+          name: ${{ github.event.repository.name }}-mac
           path: |
             *.dmg
           compression-level: 0 # .dmg is already compressed.
