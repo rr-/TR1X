@@ -263,6 +263,7 @@ sources = [
   'src/game/phase/phase_game.c',
   'src/game/phase/phase_inventory.c',
   'src/game/phase/phase_pause.c',
+  'src/game/phase/phase_photo_mode.c',
   'src/game/phase/phase_picture.c',
   'src/game/phase/phase_stats.c',
   'src/game/random.c',

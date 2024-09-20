@@ -973,6 +973,14 @@ typedef union INPUT_STATE {
         uint64_t toggle_bilinear_filter : 1;
         uint64_t toggle_perspective_filter : 1;
         uint64_t toggle_fps_counter : 1;
+        uint64_t toggle_photo_mode : 1;
+        uint64_t photo_mode_help : 1;
+        uint64_t photo_mode_down : 1;
+        uint64_t photo_mode_up : 1;
+        uint64_t photo_mode_forward : 1;
+        uint64_t photo_mode_back : 1;
+        uint64_t photo_mode_left : 1;
+        uint64_t photo_mode_right : 1;
         uint64_t menu_up : 1;
         uint64_t menu_down : 1;
         uint64_t menu_left : 1;

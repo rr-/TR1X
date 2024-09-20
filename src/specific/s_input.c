@@ -982,6 +982,16 @@ INPUT_STATE S_Input_GetCurrentState(
     linput.toggle_fps_counter        = M_Key(INPUT_ROLE_FPS, layout_num);
     linput.toggle_bilinear_filter    = M_Key(INPUT_ROLE_BILINEAR, layout_num);
     linput.toggle_perspective_filter = KEY_DOWN(SDL_SCANCODE_F4);
+
+    linput.toggle_photo_mode         = KEY_DOWN(SDL_SCANCODE_F1);
+    linput.photo_mode_help           = KEY_DOWN(SDL_SCANCODE_TAB);
+    linput.photo_mode_down           = KEY_DOWN(SDL_SCANCODE_Q);
+    linput.photo_mode_up             = KEY_DOWN(SDL_SCANCODE_E);
+    linput.photo_mode_forward        = KEY_DOWN(SDL_SCANCODE_W);
+    linput.photo_mode_back           = KEY_DOWN(SDL_SCANCODE_S);
+    linput.photo_mode_left           = KEY_DOWN(SDL_SCANCODE_A);
+    linput.photo_mode_right          = KEY_DOWN(SDL_SCANCODE_D);
+
     // clang-format on
 
     if (m_Controller) {

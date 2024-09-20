@@ -17,3 +17,5 @@ void Camera_OffsetReset(void);
 void Camera_RefreshFromTrigger(const TRIGGER *trigger);
 void Camera_MoveManual(void);
 void Camera_Apply(void);
+int32_t Camera_GetPhotoMaxSpeed(void);
+int32_t Camera_GetPhotoCurrentSpeed(void);

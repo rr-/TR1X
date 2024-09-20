@@ -335,7 +335,7 @@ void Shell_ProcessInput(void)
         Config_Write();
     }
 
-    if (g_InputDB.turbo_cheat) {
+    if (g_InputDB.turbo_cheat && Phase_Get() != PHASE_PHOTO_MODE) {
         Clock_CycleTurboSpeed(!g_Input.slow);
     }
 }
