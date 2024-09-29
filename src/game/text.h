@@ -7,6 +7,7 @@
 #include <stdint.h>
 
 #define TEXT_HEIGHT 11
+#define TEXT_HEIGHT_FIX 15
 #define TEXT_Y_SPACING 3
 #define TEXT_OUTLINE_THICKNESS 2
 #define TEXT_MAX_STRING_SIZE 100

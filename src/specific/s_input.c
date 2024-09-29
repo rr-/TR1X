@@ -987,10 +987,10 @@ INPUT_STATE S_Input_GetCurrentState(
     linput.photo_mode_help           = KEY_DOWN(SDL_SCANCODE_TAB);
     linput.photo_mode_down           = KEY_DOWN(SDL_SCANCODE_Q);
     linput.photo_mode_up             = KEY_DOWN(SDL_SCANCODE_E);
-    linput.photo_mode_forward        = KEY_DOWN(SDL_SCANCODE_W);
-    linput.photo_mode_back           = KEY_DOWN(SDL_SCANCODE_S);
-    linput.photo_mode_left           = KEY_DOWN(SDL_SCANCODE_A);
-    linput.photo_mode_right          = KEY_DOWN(SDL_SCANCODE_D);
+    linput.photo_mode_forward        = linput.camera_up;
+    linput.photo_mode_back           = linput.camera_down;
+    linput.photo_mode_left           = linput.camera_left;
+    linput.photo_mode_right          = linput.camera_right;
 
     // clang-format on
 

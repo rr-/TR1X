@@ -9,6 +9,7 @@
 #include "game/shell.h"
 #include "game/sound.h"
 #include "game/text.h"
+#include "game/ui/widgets/photo_mode.h"
 #include "game/viewport.h"
 #include "global/vars.h"
 
@@ -18,7 +19,6 @@
 
 #define MIN_PHOTO_FOV 10
 #define MAX_PHOTO_FOV 140
-#define LABEL_COUNT 10
 
 typedef enum {
     PS_NONE,
@@ -30,26 +30,9 @@ static int32_t m_OldFOV;
 static int32_t m_CurrentFOV;
 
 static PHOTO_STATUS m_Status = PS_NONE;
-static bool m_ShowHelp = true;
-static TEXTSTRING *m_Labels[LABEL_COUNT];
 static BAR_INFO m_SpeedBar = { 0 };
+static UI_WIDGET *m_PhotoMode = NULL;
 
-static const char *const m_LabelStrs[LABEL_COUNT] = {
-    // clang-format off
-    "Photo Mode",
-    "QEWASD: Move camera",
-    "ARROWS: Rotate camera",
-    "STEP L/R: Roll camera",
-    "ROLL: Rotate 90 degrees",
-    "JUMP/WALK: Adjust FOV",
-    "LOOK: Reset camera",
-    "TAB: Toggle help",
-    "ACTION: Take picture",
-    "F1/ESC: Exit",
-    // clang-format on
-};
-
-static void M_UpdateUI(void);
 static void M_Start(void *arg);
 static void M_End(void);
 static PHASE_CONTROL M_Control(int32_t nframes);
@@ -67,16 +50,6 @@ static void M_Start(void *arg)
     Music_Pause();
     Sound_PauseAll();
 
-    const int16_t x = 21;
-    int16_t y = 50;
-    m_Labels[0] = Text_Create(x, y, m_LabelStrs[0]);
-    y += 25;
-
-    for (int32_t i = 1; i < LABEL_COUNT; i++) {
-        m_Labels[i] = Text_Create(x, y, m_LabelStrs[i]);
-        y += 20;
-    }
-
     m_SpeedBar.type = BT_PROGRESS;
     m_SpeedBar.value = 0;
     m_SpeedBar.max_value = Camera_GetPhotoMaxSpeed();
@@ -86,18 +59,7 @@ static void M_Start(void *arg)
     m_SpeedBar.color = g_Config.enemy_healthbar_color;
     m_SpeedBar.location = BL_BOTTOM_CENTER;
 
-    M_UpdateUI();
-    if (!m_ShowHelp) {
-        Console_Log(
-            "Entering Photo Mode...\nPress TAB for help\nPress F1 to exit");
-    }
-}
-
-static void M_UpdateUI(void)
-{
-    for (int32_t i = 0; i < LABEL_COUNT; i++) {
-        Text_Hide(m_Labels[i], !m_ShowHelp);
-    }
+    m_PhotoMode = UI_PhotoMode_Create();
 }
 
 static void M_End(void)
@@ -105,13 +67,11 @@ static void M_End(void)
     g_Input = g_OldInputDB;
     Viewport_SetFOV(m_OldFOV);
 
+    m_PhotoMode->free(m_PhotoMode);
+    m_PhotoMode = NULL;
+
     Music_Unpause();
     Sound_UnpauseAll();
-
-    for (int32_t i = 0; i < LABEL_COUNT; i++) {
-        Text_Remove(m_Labels[i]);
-        m_Labels[i] = NULL;
-    }
 }
 
 static PHASE_CONTROL M_Control(int32_t nframes)
@@ -129,20 +89,14 @@ static PHASE_CONTROL M_Control(int32_t nframes)
 
     if (g_InputDB.toggle_photo_mode || g_InputDB.menu_back) {
         Phase_Set(PHASE_GAME, NULL);
+    } else if (g_InputDB.action) {
+        m_Status = PS_ACTIVE;
     } else {
-        if (g_InputDB.photo_mode_help) {
-            m_ShowHelp = !m_ShowHelp;
-            M_UpdateUI();
-        }
-
-        if (g_InputDB.action) {
-            m_Status = PS_ACTIVE;
-        } else {
-            M_AdjustFOV();
-            Camera_Update();
-            m_SpeedBar.value = Camera_GetPhotoCurrentSpeed();
-            m_SpeedBar.show = m_SpeedBar.value > 0;
-        }
+        m_PhotoMode->control(m_PhotoMode);
+        M_AdjustFOV();
+        Camera_Update();
+        m_SpeedBar.value = Camera_GetPhotoCurrentSpeed();
+        m_SpeedBar.show = m_SpeedBar.value > 0;
     }
 
     return (PHASE_CONTROL) { .end = false };
@@ -179,7 +133,7 @@ static void M_Draw(void)
         return;
     }
 
-    Text_Draw();
+    m_PhotoMode->draw(m_PhotoMode);
     if (m_SpeedBar.show) {
         Overlay_BarDraw(&m_SpeedBar, RSR_BAR);
     }
