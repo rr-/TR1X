@@ -61,7 +61,7 @@ static void M_Start(void *arg)
     m_Status = PS_NONE;
     g_OldInputDB = g_Input;
     m_OldFOV = Viewport_GetFOV();
-    m_CurrentFOV = g_Config.fov_value;
+    m_CurrentFOV = m_OldFOV;
 
     Overlay_HideGameInfo();
     Music_Pause();
@@ -152,6 +152,7 @@ static void M_AdjustFOV(void)
 {
     if (g_InputDB.look) {
         Viewport_SetFOV(m_OldFOV);
+        m_CurrentFOV = m_OldFOV / PHD_DEGREE;
         return;
     }
 

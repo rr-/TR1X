@@ -34,10 +34,6 @@
 #define CAM_SPEED_SHIFT(val) (((float)m_PhotoSpeed / PHOTO_MAX_SPEED) * val)
 #define CAM_ROT_SHIFT (MAX(PHD_DEGREE, CAM_SPEED_SHIFT(PHOTO_ROT_SHIFT)))
 
-#define CAM_INPUT_SHIFT(neg, pos)                                              \
-    ((g_Input.neg ? -1 : 0) + (g_Input.pos ? 1 : 0))                           \
-        * CAM_SPEED_SHIFT(PHOTO_AXIS_SHIFT)
-
 #define SHIFT_POS(a, b)                                                        \
     do {                                                                       \
         a.x += b.x;                                                            \
@@ -699,23 +695,30 @@ static void M_UpdatePhotoMode(void)
         m_PhotoMode = true;
     }
 
-    const bool shift_input = g_Input.photo_mode_up || g_Input.photo_mode_down
-        || g_Input.photo_mode_forward || g_Input.photo_mode_back
-        || g_Input.photo_mode_left || g_Input.photo_mode_right;
-    const bool rot_input = g_Input.left || g_Input.right || g_Input.forward
-        || g_Input.back || g_InputDB.roll;
+    const bool axis_shift_input =
+        g_Input.photo_mode_up || g_Input.photo_mode_down;
+    const bool dir_shift_input = g_Input.photo_mode_forward
+        || g_Input.photo_mode_back || g_Input.photo_mode_left
+        || g_Input.photo_mode_right;
+    const bool rot_input =
+        g_Input.left || g_Input.right || g_Input.forward || g_Input.back;
+    const bool rot_target_input = g_InputDB.roll;
     const bool roll_input = g_Input.step_left || g_Input.step_right;
-    if (rot_input) {
-        g_Camera.target_distance = PHOTO_ROT_DISTANCE;
-    } else {
-        g_Camera.target_distance = DEFAULT_DISTANCE;
-    }
+
+    PHD_ANGLE angles[2];
+    Math_GetVectorAngles(
+        g_Camera.target.x - g_Camera.pos.x, g_Camera.target.y - g_Camera.pos.y,
+        g_Camera.target.z - g_Camera.pos.z, angles);
+    g_Camera.target_angle = angles[0];
+    g_Camera.target_elevation = angles[1];
+    g_Camera.target_distance = DEFAULT_DISTANCE;
+    g_Camera.target_square = SQUARE(g_Camera.target_distance);
 
     if (g_InputDB.look) {
         g_Camera = m_OldCamera;
         m_PhotoSpeed = 0;
         m_Roll = 0;
-    } else if (shift_input || (rot_input && !g_InputDB.roll) || roll_input) {
+    } else if (axis_shift_input || dir_shift_input || rot_input || roll_input) {
         m_PhotoSpeed++;
     } else {
         m_PhotoSpeed -= 4;
@@ -729,102 +732,117 @@ static void M_UpdatePhotoMode(void)
     }
     CLAMP(m_Roll, -PHOTO_MAX_ROLL, PHOTO_MAX_ROLL);
 
-    if (!shift_input && !rot_input) {
+    if (!axis_shift_input && !dir_shift_input && !rot_input
+        && !rot_target_input) {
         return;
     }
 
     const GAME_VECTOR old_pos = g_Camera.pos;
     const GAME_VECTOR old_target = g_Camera.target;
 
-    PHD_ANGLE angles[2];
-    Math_GetVectorAngles(
-        g_Camera.target.x - g_Camera.pos.x, g_Camera.target.y - g_Camera.pos.y,
-        g_Camera.target.z - g_Camera.pos.z, angles);
-    g_Camera.target_angle = angles[0];
-
-    XYZ_16 shift = {
-        .x = CAM_INPUT_SHIFT(photo_mode_left, photo_mode_right),
-        .y = -CAM_INPUT_SHIFT(photo_mode_down, photo_mode_up),
-        .z = CAM_INPUT_SHIFT(photo_mode_back, photo_mode_forward),
-    };
-
-    const DIRECTION direction =
-        (uint16_t)(g_Camera.target_angle + PHD_45) / PHD_90;
-    switch (direction) {
-    case DIR_EAST: {
-        int16_t temp;
-        SWAP(shift.x, shift.z, temp);
-        shift.z *= -1;
-        break;
-    }
-    case DIR_SOUTH: {
-        shift.z *= -1;
-        shift.x *= -1;
-        break;
-    }
-    case DIR_WEST: {
-        int16_t temp;
-        SWAP(shift.x, shift.z, temp);
-        shift.x *= -1;
-        break;
-    }
-    default:
-        break;
+    if (axis_shift_input) {
+        const int32_t distance = CAM_SPEED_SHIFT((WALL_L * 5.0) / LOGIC_FPS);
+        XYZ_32 shift = {
+            .x = 0,
+            .y = 0,
+            .z = 0,
+        };
+        if (g_Input.photo_mode_up) {
+            shift.y = distance;
+        } else if (g_Input.photo_mode_down) {
+            shift.y = -distance;
+        }
+        SHIFT_POS(g_Camera.pos, shift);
+        SHIFT_POS(g_Camera.target, shift);
     }
 
-    SHIFT_POS(g_Camera.pos, shift);
-    SHIFT_POS(g_Camera.target, shift);
+    if (dir_shift_input) {
+        const int32_t distance = CAM_SPEED_SHIFT((WALL_L * 5.0) / LOGIC_FPS);
 
-    if (g_InputDB.roll) {
-        g_Camera.target_angle += (int16_t)PHD_90;
-    } else if (g_Input.left) {
-        g_Camera.target_angle -= (int16_t)CAM_ROT_SHIFT;
-    } else if (g_Input.right) {
-        g_Camera.target_angle += (int16_t)CAM_ROT_SHIFT;
-    }
+        PHD_ANGLE angle = g_Camera.target_angle;
+        PHD_ANGLE elevation = g_Camera.target_elevation;
+        int32_t dy = 1;
+        if (g_Input.photo_mode_forward) {
+        } else if (g_Input.photo_mode_back) {
+            angle += PHD_180;
+            dy = -1;
+        } else if (g_Input.photo_mode_left) {
+            angle -= PHD_90;
+            dy = 0;
+        } else if (g_Input.photo_mode_right) {
+            angle += PHD_90;
+            dy = 0;
+        }
 
-    if (g_Input.forward) {
-        g_Camera.target.y += CAM_SPEED_SHIFT(8);
-    } else if (g_Input.back) {
-        g_Camera.target.y -= CAM_SPEED_SHIFT(8);
+        XYZ_32 shift = {
+            .x =
+                (((distance * Math_Cos(elevation)) >> W2V_SHIFT)
+                     * Math_Sin(angle)
+                 >> W2V_SHIFT),
+            .z =
+                (((distance * Math_Cos(elevation)) >> W2V_SHIFT)
+                     * Math_Cos(angle)
+                 >> W2V_SHIFT),
+            .y = dy * -(distance * Math_Sin(elevation) >> W2V_SHIFT),
+        };
+        SHIFT_POS(g_Camera.pos, shift);
+        SHIFT_POS(g_Camera.target, shift);
     }
 
     if (rot_input) {
-        const int32_t distance =
-            g_Camera.target_distance * Math_Cos(g_Camera.target_elevation)
-            >> W2V_SHIFT;
-        g_Camera.target_square = SQUARE(distance);
-
+        if (g_Input.forward) {
+            g_Camera.target_elevation -= CAM_ROT_SHIFT;
+        } else if (g_Input.back) {
+            g_Camera.target_elevation += CAM_ROT_SHIFT;
+        } else if (g_Input.left) {
+            g_Camera.target_angle -= CAM_ROT_SHIFT;
+        } else if (g_Input.right) {
+            g_Camera.target_angle += CAM_ROT_SHIFT;
+        }
         const PHD_ANGLE angle = g_Camera.target_angle;
-        g_Camera.pos.x =
-            g_Camera.target.x - (distance * Math_Sin(angle) >> W2V_SHIFT);
-        g_Camera.pos.z =
-            g_Camera.target.z - (distance * Math_Cos(angle) >> W2V_SHIFT);
+        const PHD_ANGLE elevation = g_Camera.target_elevation;
+        const int32_t distance = g_Camera.target_distance;
+        const XYZ_32 shift = {
+            .x =
+                (((distance * Math_Cos(elevation)) >> W2V_SHIFT)
+                     * Math_Sin(angle)
+                 >> W2V_SHIFT),
+            .z =
+                (((distance * Math_Cos(elevation)) >> W2V_SHIFT)
+                     * Math_Cos(angle)
+                 >> W2V_SHIFT),
+            .y = -(distance * Math_Sin(elevation) >> W2V_SHIFT),
+        };
+        g_Camera.target.x = g_Camera.pos.x + shift.x;
+        g_Camera.target.y = g_Camera.pos.y + shift.y;
+        g_Camera.target.z = g_Camera.pos.z + shift.z;
     }
 
-    LOS_Check(&g_Camera.target, &g_Camera.pos);
-
-    // The extra test without a clamp is needed for the beginning of Folly,
-    // where the camera starts in a bad position.
-    if ((M_PhotoBadPosition(g_Camera.pos, PHOTO_CLAMP)
-         || M_PhotoBadPosition(g_Camera.target, PHOTO_CLAMP))
-        && M_PhotoBadPosition(g_Camera.pos, 0)) {
-        g_Camera.pos.x = old_pos.x;
-        g_Camera.pos.z = old_pos.z;
-        g_Camera.target.x = old_target.x;
-        g_Camera.target.z = old_target.z;
+    if (rot_target_input) {
+        const PHD_ANGLE angle = g_Camera.target_angle + PHD_90;
+        const PHD_ANGLE elevation = g_Camera.target_elevation;
+        const int32_t distance = g_Camera.target_distance;
+        const XYZ_32 shift = {
+            .x =
+                (((distance * Math_Cos(elevation)) >> W2V_SHIFT)
+                     * Math_Sin(angle)
+                 >> W2V_SHIFT),
+            .z =
+                (((distance * Math_Cos(elevation)) >> W2V_SHIFT)
+                     * Math_Cos(angle)
+                 >> W2V_SHIFT),
+            .y = -(distance * Math_Sin(elevation) >> W2V_SHIFT),
+        };
+        g_Camera.pos.x = g_Camera.target.x - shift.x;
+        g_Camera.pos.y = g_Camera.target.y - shift.y;
+        g_Camera.pos.z = g_Camera.target.z - shift.z;
     }
 
-    const int32_t y_shift =
-        MAX(M_ClampPhotoY(&g_Camera.pos), M_ClampPhotoY(&g_Camera.target));
-    g_Camera.pos.y += y_shift;
-    g_Camera.target.y += y_shift;
+    g_Camera.pos.room_num =
+        Room_GetIndexFromPos(g_Camera.pos.x, g_Camera.pos.y, g_Camera.pos.z);
 
-    if (g_Camera.pos.y >= NO_BAD_POS || g_Camera.pos.y <= NO_BAD_NEG
-        || g_Camera.target.y >= NO_BAD_POS || g_Camera.target.y <= NO_BAD_NEG) {
-        g_Camera.pos.y = old_pos.y;
-        g_Camera.target.y = old_target.y;
-    }
+    g_Camera.target.room_num = Room_GetIndexFromPos(
+        g_Camera.target.x, g_Camera.target.y, g_Camera.target.z);
 }
 
 static void M_ExitPhotoMode(void)
