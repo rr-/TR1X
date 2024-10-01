@@ -1,76 +1,14 @@
 <p align="center">
-<img alt="TR1X logo" src="data/logo-light-theme.png#gh-light-mode-only" width="400"/>
-<img alt="TR1X logo" src="data/logo-dark-theme.png#gh-dark-mode-only" width="400"/>
+<img alt="TR1X logo" src="/data/tr1/logo-light-theme.png#gh-light-mode-only" width="400"/>
+<img alt="TR1X logo" src="/data/tr1/logo-dark-theme.png#gh-dark-mode-only" width="400"/>
 </p>
-
-This is an open source implementation of the classic Tomb Raider I game (1996),
-made by reverse engineering the TombATI / GLRage variant of the original game
-and replacing proprietary audio/video libraries with open source variants.
-
-See the [Tomb Raider Forums
-topic](https://www.tombraiderforums.com/showthread.php?p=8286101).
-
-## Showcase
-
-<table>
-    <tr>
-        <th>
-            Restored braid
-            <img src="docs/showcase/braid.jpg"/>
-        </th>
-        <th>
-            Enemy health bar and UI scaling
-            <img src="docs/showcase/enemy_health_bar_and_scaling.jpg"/>
-        </th>
-    </tr>
-    <tr>
-        <th>
-            3D pickups
-            <img src="docs/showcase/3d_pickups.jpg"/>
-        </th>
-        <th>
-            Improved stats
-            <img src="docs/showcase/compass_stats.jpg"/>
-        </th>
-    </tr>
-    <tr>
-        <th>
-            Skybox support
-            <img src="docs/showcase/skybox.jpg"/>
-        </th>
-        <th>
-            Customizable draw distance
-            <img src="docs/showcase/draw_distance.webp"/>
-        </th>
-    </tr>
-    <tr>
-        <th>
-            Fly cheat
-            <img src="docs/showcase/fly_cheat.jpg"/>
-        </th>
-        <th>
-            Developer console
-            <img src="docs/showcase/console.webp"/>
-        </th>
-    </tr>
-    <tr>
-        <th>
-            Free camera
-            <img src="docs/showcase/free_camera.jpg"/>
-        </th>
-        <th>
-            PS1 UI and new graphics options
-            <img src="docs/showcase/ps1_ui_and_gfx.jpg"/>
-        </th>
-    </tr>
-</table>
 
 ## Windows / Linux
 
 ### Installing (simplified)
 
-1. Head over to GitHub releases: https://github.com/LostArtefacts/TR1X/releases
-2. Download the installer. Your browser may complain that the .exe is unsafe, but it's OK to ignore this alert.
+1. Head over to GitHub releases: https://github.com/LostArtefacts/TRX/releases
+2. Download the TR1X installer. Your browser may complain that the .exe is unsafe, but it's OK to ignore this alert.
 3. Mark the installer EXE as safe to run by right-clicking on the .exe, going to properties and clicking "Unblock".
 4. Run the installer and proceed with the steps.
 
@@ -78,11 +16,10 @@ We hope that eventually these alerts will go away as the popularity of the proje
 
 ### Installing (advanced / manual)
 
-1. Head over to GitHub releases: https://github.com/LostArtefacts/TR1X/releases
-2. Download the zip file.
+1. Head over to GitHub releases: https://github.com/LostArtefacts/TRX/releases
+2. Download the TR1X zip file.
 3. Extract the zip file into a directory of your choice.  
-   Make sure you choose to overwrite existing directories and files
-   (`cfg/TR1X_config.json5` can remain, but new features will not be configurable).
+   Make sure you choose to overwrite existing directories and files.
 4. (First time installation) Put your original game files into the target directory.
     1. For Steam and GOG users, extract the original `GAME.BIN` file using a tool such as UltraISO to your target directory.
        Note that neither the GOG nor the Steam releases ship the music files. You have a few options here:
@@ -632,7 +569,7 @@ Not all options are turned on by default. Refer to `TR1X_ConfigTool.exe` for det
     - **The Hive**: converted track 9 in room 8, track 6 in room 18, track 12 in room 30, track 18 in room 31, track 3 in room 32, and track 20 in room 35 to one shot
 
 #### Mods
-- added developer console (accessible with `/`, see [COMMANDS.md] for details)
+- added developer console (accessible with `/`, see [COMMANDS.md](COMMANDS.md) for details)
 - added ability to adjust Lara's starting health (easy no damage mod)
 - added ability to disable healing between levels
 - added ability to disable certain item pickups (all medpacks, shotgun, Magnums and/or UZIs)
@@ -665,47 +602,3 @@ Not all options are turned on by default. Refer to `TR1X_ConfigTool.exe` for det
 - changed saves to be put in the saves/ directory
 - fixed playing the secret sound in Tomb of Tihocan
 - fixed reading user settings not restoring the volume
-
-## Q&A
-
-1. **Is the game fully playable from beginning to the end?**
-
-    Yes. If you encounter a bug, please file a ticket.
-
-2. **Can we get HD textures? Reflections? Other visual updates?**
-
-    Eventually, probably yes, but we'd really appreciate help with these.
-
-3. **Can we get braid in every level? Skyboxes? Flyby cameras? New animations? etc.**
-
-    The difficulty here is that these features often require inserting a
-    completely new animation, a textured mesh or a sound file and pretend
-    they're always been a part of the original game. Work is underway on an
-    injection framework, and the braid is now supported in each level.
-
-4. **Can I play this on Mac, Linux, Android...?**
-
-    Currently supported platforms include Windows, Linux and macOS. In the
-    future, it might be possible to run the game on Android as well –
-    contributions are welcome!
-
-5. **What's the relation to TR2Main?**
-
-    Initially established as TR1Main in 2021, our project's development paths
-    deviated, leading us to recognize the need for a distinct name. As a
-    result, we rebranded the project as Tomb1Main. However, to further
-    differentiate ourselves, we underwent another rebranding in 2023,
-    ultimately adopting the name TR1X. TR2Main is a separate project with its
-    own unique trajectory and not directly related to our development efforts.
-
-## License
-
-This project is licensed under the GNU General Public License - see the
-[COPYING.md](COPYING.md) file for details.
-
-## Copyright
-
-(c) 2021 Marcin Kurczewski. All rights reserved. Original game is created by
-Core Design Ltd. in 1996. Lara Croft and Tomb Raider are trademarks of Square
-Enix Ltd. Title image by Kidd Bowyer. Loading screens and high quality images
-by goblan_oldnewpixel and Posix.

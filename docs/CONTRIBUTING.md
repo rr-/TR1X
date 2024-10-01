@@ -4,7 +4,7 @@
 
 - Compile the project (described in the next section)
 - Copy all .dll and .exe files from `build/` to your game directory
-- Copy the contents of `data/ship/` to your game directory
+- Copy the contents of `data/…/ship/` to your game directory
 
 
 
@@ -14,14 +14,16 @@
 
 - **With Docker**:
 
-    Make sure to install Docker and [just](https://github.com/casey/just), then
-    run `just`. The binaries should appear in the `build/` directory.
-    To see list of possible build targets, run `just -l`.
+    Make sure to install Docker and [just](https://github.com/casey/just).
+    To see the list of all possible build targets, run `just -l`. To build the
+    images, use the `just *-build-*` commands relevant to the game and platform
+    you want to build for. The binaries should appear in the `build/`
+    directory.
 
 - **Without Docker**:
 
     This scenario is not officially supported, but you can see how it's done by
-    examining the files in the `tools/docker/` directory for the external
+    examining the files in the `tools/*/docker/` directory for the external
     dependencies and `meson.build` for the local files, then tailoring your
     system to match the process.
 
@@ -91,8 +93,9 @@ guidelines:
 
 - Variables are `lower_snake_case`
 - Global variables are `g_PascalCase`
-- Module variables are `m_PascalCase`
+- Module-scoped global variables are `m_PascalCase` and static
 - Function names are `Module_PascalCase`
+- Module-scoped function names are `M_PascalCase` and static
 - Macros are `UPPER_SNAKE_CASE`
 - Struct names are `UPPER_SNAKE_CASE`
 - Struct members are `lower_snake_case`
@@ -142,28 +145,27 @@ a review from the interested parties.
 
 ### Changelog
 
-We keep a changelog in `CHANGELOG.md`. Anything other than an internal change
+We keep a changelog for each game in a relevant `CHANGELOG.md` file. Anything other than an internal change
 or refactor needs an entry there. Furthermore, new features and OG bugfixes
-should be documented in README as well.
+should be documented in the `README.md` file as well.
 
 
 ### Commit scope
 
-Either you can make a lot of throwaway commits such as 'test' 'continue
-testing' 'fix 1' 'fix 2' 'fix of the fix' and then squash your pull request as
-a whole, or you can craft a nice history with proper commit messages and then
-merge-rebase. The first case is mostly acceptable for isolated features, but in
-general we prefer the latter approach. As a principle, refactors should made in
-separate commits. Code review changes are best made incrementally and then
-squashed prior to merging, for easing the review process.
+There are two options for handling commits. One approach involves making
+temporary commits with messages like 'test,' 'continue testing,' 'fix 1,' 'fix
+2,' and 'fix of the fix,' followed by squashing all of them when creating a
+pull request. The other approach is to maintain a clean commit history with
+meaningful messages and use merge-rebase. While the first approach can be
+suitable for isolated features, the latter is generally preferred.
 
 
 ### Commit messages
 
 **The most important thing to remember:** bug fixes and feature implementations
 should always include the phrase `Resolves #123`. If there's no ticket and the
-pull request you're making contains player-facing changes, a ticket needs
-to be created first – no exceptions.
+submitted pull request contains player-facing changes, a ticket needs to be
+created first.
 
 Anything else is just for consistency and general neatness. Our commit messages
 aim to respect the 50/72 rule and have the following form:
@@ -249,7 +251,7 @@ released ahead of unpublished work in `develop` are merged directly to
 ### Tooling
 
 We try to code all of our internal tools in a reasonably recent version of
-Python. Avoid bash, shell and other similar languages.
+Python and tend to avoid bash, shell and other similar languages.
 
 
 ### Releasing a new version
@@ -263,7 +265,16 @@ a specific version. See git history for details.
 
 ## Glossary
 
-- OG: original game
-- UK Box: the version released on discs in the UK
-- Multipatch: the version released on Steam
+
+- Tomb1Main: the previous name of this project
+- T1M: short hand of Tomb1Main
+- OG: original game, most often TombATI
+- Vole: a rat that swims
+- Pod: a mutant egg (including the big egg)
+- Cabin: the room with the pistols from Natla's Mines
+- Statue: centaur statues from the entrance of Tihocan's Tomb
+- Bacon Lara: the doppelgänger Lara in the Atlantis level
+- Torso/Adam: the big boss mutant from The Great Pyramid level
+- UK Box: the version of TR2 released on discs in the UK
+- Multipatch: the version of TR2 released on Steam
 - PS: PlayStation version of the game
