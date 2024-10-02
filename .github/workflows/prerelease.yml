@@ -16,7 +16,7 @@ jobs:
     secrets: inherit
 
   package_tr1_mac:
-    name: "Build TR1 (mac)"
+    name: Build TR1
     if: |
       vars.PRERELEASE_ENABLE == 'true' &&
       vars.MACOS_ENABLE == 'true'
