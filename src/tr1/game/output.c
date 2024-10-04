@@ -85,7 +85,8 @@ static const int16_t *M_CalcObjectVertices(const int16_t *obj_ptr);
 static const int16_t *M_CalcVerticeLight(const int16_t *obj_ptr);
 static const int16_t *M_CalcVerticeEnvMap(const int16_t *obj_ptr);
 static const int16_t *M_CalcSkyboxLight(const int16_t *obj_ptr);
-static const int16_t *M_CalcRoomVertices(const int16_t *obj_ptr);
+static const int16_t *M_CalcRoomVertices(
+    const int16_t *obj_ptr, bool allow_wibble);
 static int32_t M_CalcFogShade(int32_t depth);
 static void M_CalcWibbleTable(void);
 
@@ -404,7 +405,8 @@ static const int16_t *M_CalcSkyboxLight(const int16_t *obj_ptr)
     return obj_ptr;
 }
 
-static const int16_t *M_CalcRoomVertices(const int16_t *obj_ptr)
+static const int16_t *M_CalcRoomVertices(
+    const int16_t *obj_ptr, const bool allow_wibble)
 {
     int32_t vertex_count = *obj_ptr++;
 
@@ -458,9 +460,12 @@ static const int16_t *M_CalcRoomVertices(const int16_t *obj_ptr)
             const double persp = g_PhdPersp / (double)zv;
             double xs = Viewport_GetCenterX() + xv * persp;
             double ys = Viewport_GetCenterY() + yv * persp;
-            if (m_IsWibbleEffect && !(obj_ptr[3] & NO_VERT_MOVE)) {
-                xs += m_WibbleTable[(m_WibbleOffset + (int)ys) & 0x1F];
-                ys += m_WibbleTable[(m_WibbleOffset + (int)xs) & 0x1F];
+            if (allow_wibble && m_IsWibbleEffect
+                && !(obj_ptr[3] & NO_VERT_MOVE)) {
+                xs += m_WibbleTable
+                    [(m_WibbleOffset + (int)ys) & (WIBBLE_SIZE - 1)];
+                ys += m_WibbleTable
+                    [(m_WibbleOffset + (int)xs) & (WIBBLE_SIZE - 1)];
             }
 
             if (xs < g_PhdLeft) {
@@ -762,9 +767,16 @@ void Output_DrawSkybox(const int16_t *obj_ptr)
 
 void Output_DrawRoom(const int16_t *obj_ptr)
 {
-    obj_ptr = M_CalcRoomVertices(obj_ptr);
+    const int16_t *const old_obj_ptr = obj_ptr;
+    obj_ptr = M_CalcRoomVertices(obj_ptr, false);
     obj_ptr = M_DrawObjectGT4(obj_ptr + 1, *obj_ptr);
     obj_ptr = M_DrawObjectGT3(obj_ptr + 1, *obj_ptr);
+
+    obj_ptr = old_obj_ptr;
+    obj_ptr = M_CalcRoomVertices(obj_ptr, true);
+    obj_ptr = M_DrawObjectGT4(obj_ptr + 1, *obj_ptr);
+    obj_ptr = M_DrawObjectGT3(obj_ptr + 1, *obj_ptr);
+
     obj_ptr = M_DrawRoomSprites(obj_ptr + 1, *obj_ptr);
 }
 
