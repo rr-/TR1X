@@ -10,11 +10,11 @@ const char *g_TRXVersion = "TR2X (non-Docker build)";
 
 GAME_FLOW_COMMAND g_GF_OverrideCommand = { .action = GF_NOOP };
 
-int16_t g_RoomsToDraw[MAX_ROOMS_TO_DRAW] = { 0 };
+int16_t g_RoomsToDraw[MAX_ROOMS_TO_DRAW] = {};
 int16_t g_RoomsToDrawCount = 0;
 
 const float g_RhwFactor = 0x14000000.p0;
-uint16_t *g_TexturePageBuffer16[MAX_TEXTURE_PAGES] = { 0 };
+uint16_t *g_TexturePageBuffer16[MAX_TEXTURE_PAGES] = {};
 PHD_TEXTURE g_TextureInfo[MAX_TEXTURES];
 
 SDL_Window *g_SDLWindow = NULL;
@@ -97,7 +97,7 @@ int16_t g_NextItemActive;
 int16_t g_PrevItemActive;
 GAME_FLOW g_GameFlow;
 int32_t g_SoundEffectCount;
-OBJECT g_Objects[265] = { 0 };
+OBJECT g_Objects[265] = {};
 int16_t **g_Meshes = NULL;
 int32_t g_RoomCount;
 ROOM *g_Rooms = NULL;
@@ -276,8 +276,8 @@ REQUEST_INFO g_LoadGameRequester = {
     .background_flags = 0,
     .moreup_flags = 0,
     .moredown_flags = 0,
-    .item_flags1 = { 0 },
-    .item_flags2 = { 0 },
+    .item_flags1 = {},
+    .item_flags2 = {},
     .heading_text1 = NULL,
     .heading_text2 = NULL,
     .background_text = NULL,
@@ -285,8 +285,8 @@ REQUEST_INFO g_LoadGameRequester = {
     .moredown_text = NULL,
     .item_texts1 = { NULL },
     .item_texts2 = { NULL },
-    .heading_string1 = { 0 },
-    .heading_string2 = { 0 },
+    .heading_string1 = {},
+    .heading_string2 = {},
     .render_width = 0,
     .render_height = 0,
 };
@@ -315,8 +315,8 @@ REQUEST_INFO g_SaveGameRequester = {
     .background_flags = 0,
     .moreup_flags = 0,
     .moredown_flags = 0,
-    .item_flags1 = { 0 },
-    .item_flags2 = { 0 },
+    .item_flags1 = {},
+    .item_flags2 = {},
     .heading_text1 = NULL,
     .heading_text2 = NULL,
     .background_text = NULL,
@@ -324,8 +324,8 @@ REQUEST_INFO g_SaveGameRequester = {
     .moredown_text = NULL,
     .item_texts1 = { NULL },
     .item_texts2 = { NULL },
-    .heading_string1 = { 0 },
-    .heading_string2 = { 0 },
+    .heading_string1 = {},
+    .heading_string2 = {},
     .render_width = 0,
     .render_height = 0,
 };

@@ -12,7 +12,7 @@ typedef struct {
 } BUILTIN_KEYBOARD_LAYOUT;
 
 const Uint8 *m_KeyboardState = NULL;
-static bool m_Conflicts[INPUT_LAYOUT_NUMBER_OF][INPUT_ROLE_NUMBER_OF] = { 0 };
+static bool m_Conflicts[INPUT_LAYOUT_NUMBER_OF][INPUT_ROLE_NUMBER_OF] = {};
 
 static BUILTIN_KEYBOARD_LAYOUT m_BuiltinLayout[] = {
 // clang-format off

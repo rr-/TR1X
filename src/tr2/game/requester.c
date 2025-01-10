@@ -327,7 +327,7 @@ int32_t Requester_Display(
         && !strcmp(
             g_PasswordText1->content,
             g_GF_GameStrings[GF_S_GAME_PASSPORT_LOAD_GAME])) {
-        g_Input = (INPUT_STATE) { 0 };
+        g_Input = (INPUT_STATE) {};
         return 0;
     }
 

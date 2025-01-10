@@ -86,7 +86,7 @@ void CutscenePlayer_Control(const int16_t item_num)
     item->pos.y = g_Camera.pos.pos.y;
     item->pos.z = g_Camera.pos.pos.z;
 
-    XYZ_32 pos = { 0 };
+    XYZ_32 pos = {};
     Collide_GetJointAbsPosition(item, &pos, 0);
 
     const int16_t room_num = Room_FindByPos(pos.x, pos.y, pos.z);
@@ -113,7 +113,7 @@ void Lara_Control_Cutscene(const int16_t item_num)
     item->pos.y = g_Camera.pos.pos.y;
     item->pos.z = g_Camera.pos.pos.z;
 
-    XYZ_32 pos = { 0 };
+    XYZ_32 pos = {};
     Collide_GetJointAbsPosition(item, &pos, 0);
 
     const int16_t room_num = Room_FindByPos(pos.x, pos.y, pos.z);

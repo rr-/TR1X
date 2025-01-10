@@ -143,7 +143,7 @@ int16_t Spawn_GunHit(
     const int32_t x, const int32_t y, const int32_t z, const int16_t speed,
     const int16_t y_rot, const int16_t room_num)
 {
-    XYZ_32 vec = { 0 };
+    XYZ_32 vec = {};
     Collide_GetJointAbsPosition(
         g_LaraItem, &vec, Random_GetControl() * 25 / 0x7FFF);
     Spawn_Blood(

@@ -12,7 +12,7 @@ typedef struct {
     char *description;
 } M_NAME_ENTRY;
 
-static M_NAME_ENTRY m_NamesTable[O_NUMBER_OF] = { 0 };
+static M_NAME_ENTRY m_NamesTable[O_NUMBER_OF] = {};
 
 static void M_ClearNames(void);
 

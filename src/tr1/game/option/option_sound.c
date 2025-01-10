@@ -24,7 +24,7 @@ typedef enum {
     TEXT_OPTION_MAX = TEXT_SOUND_VOLUME,
 } SOUND_TEXT;
 
-static TEXTSTRING *m_Text[TEXT_NUMBER_OF] = { 0 };
+static TEXTSTRING *m_Text[TEXT_NUMBER_OF] = {};
 
 static void M_InitText(void);
 

@@ -69,8 +69,8 @@ typedef struct {
 
 extern SDL_AudioDeviceID g_AudioDeviceID;
 
-static AUDIO_STREAM_SOUND m_Streams[AUDIO_MAX_ACTIVE_STREAMS] = { 0 };
-static float m_MixBuffer[AUDIO_SAMPLES * AUDIO_WORKING_CHANNELS] = { 0 };
+static AUDIO_STREAM_SOUND m_Streams[AUDIO_MAX_ACTIVE_STREAMS] = {};
+static float m_MixBuffer[AUDIO_SAMPLES * AUDIO_WORKING_CHANNELS] = {};
 
 static size_t m_DecodeBufferCapacity = 0;
 static float *m_DecodeBuffer = NULL;

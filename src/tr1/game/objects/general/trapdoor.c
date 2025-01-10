@@ -15,7 +15,7 @@ static bool M_IsItemOnTop(const ITEM *item, int32_t x, int32_t z);
 static bool M_IsItemOnTop(const ITEM *item, int32_t x, int32_t z)
 {
     const BOUNDS_16 *const orig_bounds = &Item_GetBestFrame(item)->bounds;
-    BOUNDS_16 fixed_bounds = { 0 };
+    BOUNDS_16 fixed_bounds = {};
 
     // Bounds need to change in order to account for 2 sector trapdoors
     // and the trapdoor angle.

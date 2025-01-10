@@ -41,7 +41,7 @@
     MAP_GAME_VAR(flt_win_center_y, g_FltWinCenterY);                           \
     MAP_GAME_VAR(viewport_aspect_ratio, g_ViewportAspectRatio);
 
-static VIEWPORT m_Viewport = { 0 };
+static VIEWPORT m_Viewport = {};
 
 static void M_AlterFov(VIEWPORT *vp);
 static void M_InitGameVars(VIEWPORT *vp);

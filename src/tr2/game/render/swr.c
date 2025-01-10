@@ -1506,13 +1506,14 @@ static const int16_t *M_InsertObjectG3(
     const SORT_TYPE sort_type)
 {
     for (int32_t i = 0; i < num; i++) {
-        const PHD_VBUF *const vtx[3] = {
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-        };
-        const uint8_t color_idx = *obj_ptr++;
         int32_t num_points = 3;
+        const PHD_VBUF *const vtx[3] = {
+            &g_PhdVBuf[obj_ptr[0]],
+            &g_PhdVBuf[obj_ptr[1]],
+            &g_PhdVBuf[obj_ptr[2]],
+        };
+        const uint8_t color_idx = obj_ptr[3];
+        obj_ptr += 4;
 
         int8_t clip_or = vtx[0]->clip | vtx[1]->clip | vtx[2]->clip;
         int8_t clip_and = vtx[0]->clip & vtx[1]->clip & vtx[2]->clip;
@@ -1612,14 +1613,15 @@ static const int16_t *M_InsertObjectG4(
     const SORT_TYPE sort_type)
 {
     for (int32_t i = 0; i < num; i++) {
-        const PHD_VBUF *const vtx[4] = {
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-        };
-        const uint8_t color_idx = *obj_ptr++;
         int32_t num_points = 4;
+        const PHD_VBUF *const vtx[4] = {
+            &g_PhdVBuf[obj_ptr[0]],
+            &g_PhdVBuf[obj_ptr[1]],
+            &g_PhdVBuf[obj_ptr[2]],
+            &g_PhdVBuf[obj_ptr[3]],
+        };
+        const uint8_t color_idx = obj_ptr[4];
+        obj_ptr += 5;
 
         const int8_t clip_or =
             vtx[0]->clip | vtx[1]->clip | vtx[2]->clip | vtx[3]->clip;
@@ -1735,15 +1737,17 @@ static const int16_t *M_InsertObjectGT3(
     const SORT_TYPE sort_type)
 {
     for (int32_t i = 0; i < num; i++) {
+        int32_t num_points = 3;
         const PHD_VBUF *const vtx[3] = {
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
+            &g_PhdVBuf[obj_ptr[0]],
+            &g_PhdVBuf[obj_ptr[1]],
+            &g_PhdVBuf[obj_ptr[2]],
         };
-        const int16_t texture_idx = *obj_ptr++;
+        const int16_t texture_idx = obj_ptr[3];
+        obj_ptr += 4;
+
         const PHD_TEXTURE *const texture = &g_TextureInfo[texture_idx];
         const PHD_UV *const uv = texture->uv;
-        int32_t num_points = 3;
 
         if (texture->draw_type != DRAW_OPAQUE && g_DiscardTransparent) {
             continue;
@@ -1954,16 +1958,18 @@ static const int16_t *M_InsertObjectGT4(
     const SORT_TYPE sort_type)
 {
     for (int32_t i = 0; i < num; i++) {
+        int32_t num_points = 4;
         const PHD_VBUF *const vtx[4] = {
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
+            &g_PhdVBuf[obj_ptr[0]],
+            &g_PhdVBuf[obj_ptr[1]],
+            &g_PhdVBuf[obj_ptr[2]],
+            &g_PhdVBuf[obj_ptr[3]],
         };
-        const int16_t texture_idx = *obj_ptr++;
+        const int16_t texture_idx = obj_ptr[4];
+        obj_ptr += 5;
+
         const PHD_TEXTURE *const texture = &g_TextureInfo[texture_idx];
         const PHD_UV *const uv = texture->uv;
-        int32_t num_points = 4;
 
         if (texture->draw_type != DRAW_OPAQUE && g_DiscardTransparent) {
             continue;

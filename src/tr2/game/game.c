@@ -59,7 +59,7 @@ static GAME_FLOW_COMMAND M_Control(const bool demo_mode)
             return GF_TranslateScriptCommand(g_GameFlow.on_demo_interrupt);
         }
         if (!Demo_GetInput()) {
-            g_Input = (INPUT_STATE) { 0 };
+            g_Input = (INPUT_STATE) {};
             return GF_TranslateScriptCommand(g_GameFlow.on_demo_end);
         }
     }

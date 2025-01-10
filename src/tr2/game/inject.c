@@ -44,7 +44,7 @@ typedef struct {
 
 static int32_t m_NumInjections = 0;
 static INJECTION *m_Injections = NULL;
-static int32_t m_DataCounts[IDT_NUMBER_OF] = { 0 };
+static int32_t m_DataCounts[IDT_NUMBER_OF] = {};
 
 static void M_LoadFromFile(INJECTION *injection, const char *filename);
 

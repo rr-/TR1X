@@ -823,7 +823,7 @@ void S_Output_ApplyRenderSettings(void)
         m_Renderer3D, g_Config.rendering.anisotropy_filter);
 
     if (m_PrimarySurface == NULL) {
-        GFX_2D_SURFACE_DESC surface_desc = { 0 };
+        GFX_2D_SURFACE_DESC surface_desc = {};
         m_PrimarySurface = GFX_2D_Surface_Create(&surface_desc);
     }
     M_ClearSurface(m_PrimarySurface);

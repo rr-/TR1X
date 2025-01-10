@@ -3,7 +3,7 @@ project(
   'c',
   default_options: [
     'c_std=c2x',
-    'warning_level=2',
+    'warning_level=3',
   ],
   meson_version: '>=1.3.0',
 )
@@ -15,13 +15,18 @@ fs = import('fs')
 c_compiler = meson.get_compiler('c')
 relative_dir = fs.relative_to(meson.current_source_dir(), meson.global_build_root())
 build_opts = [
-  '-fmacro-prefix-map=@0@/=libtrx/'.format(relative_dir),
-  '-Wall',
-  '-Wpedantic',
+  # common options
   '-Wno-unused',
   '-Wno-unused-parameter',
   '-Wno-microsoft-anon-tag',
+  '-Wno-gnu-binary-literal',
+  '-Wno-gnu-empty-initializer',
+  '-Wno-gnu-zero-variadic-macro-arguments',
   '-DMESON_BUILD',
+  '-fms-extensions',
+  '-fno-omit-frame-pointer',
+  # end of common options
+  '-fmacro-prefix-map=@0@/=libtrx/'.format(relative_dir),
   '-DDWST_STATIC',
   '-DPCRE2_STATIC',
   '-DPCRE2_CODE_UNIT_WIDTH=8',

@@ -26,8 +26,10 @@ typedef struct {
 } BUILTIN_CONTROLLER_LAYOUT;
 
 static BUILTIN_CONTROLLER_LAYOUT m_BuiltinLayout[] = {
-#define INPUT_CONTROLLER_ASSIGN(role, button_type, bind, axis_dir)             \
-    { role, { button_type, { bind }, axis_dir } },
+#define INPUT_CONTROLLER_ASSIGN_BUTTON(role, bind)                             \
+    { role, { BT_BUTTON, { .button = bind }, 0 } },
+#define INPUT_CONTROLLER_ASSIGN_AXIS(role, bind, axis_dir)                     \
+    { role, { BT_AXIS, { .axis = bind }, axis_dir } },
 #if TR_VERSION == 1
     #include "game/input/backends/controller_tr1.def"
 #elif TR_VERSION == 2
@@ -130,9 +132,7 @@ static SDL_GameController *m_Controller = NULL;
 static const char *m_ControllerName = NULL;
 static SDL_GameControllerType m_ControllerType = SDL_CONTROLLER_TYPE_UNKNOWN;
 
-static bool m_Conflicts[INPUT_LAYOUT_NUMBER_OF][INPUT_ROLE_NUMBER_OF] = {
-    false
-};
+static bool m_Conflicts[INPUT_LAYOUT_NUMBER_OF][INPUT_ROLE_NUMBER_OF] = {};
 
 static const char *M_GetButtonName(SDL_GameControllerButton button);
 static const char *M_GetAxisName(SDL_GameControllerAxis axis, int16_t axis_dir);

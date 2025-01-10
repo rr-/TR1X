@@ -49,8 +49,8 @@ typedef struct {
 
 static TEXTSTRING *m_AmmoText = NULL;
 static TEXTSTRING *m_FPSText = NULL;
-static int16_t m_BarOffsetY[6] = { 0 };
-static DISPLAY_PICKUP m_Pickups[MAX_PICKUPS] = { 0 };
+static int16_t m_BarOffsetY[6] = {};
+static DISPLAY_PICKUP m_Pickups[MAX_PICKUPS] = {};
 static CLOCK_TIMER m_PickupsTimer = { .type = CLOCK_TIMER_SIM };
 static CLOCK_TIMER m_BlinkTimer = { .type = CLOCK_TIMER_SIM };
 static CLOCK_TIMER m_FPSTimer = { .type = CLOCK_TIMER_REAL };
@@ -118,9 +118,9 @@ static RGBA_8888 m_ColorBarMap[][COLOR_STEPS] = {
       { 26, 11, 40, 255 } },
 };
 
-static BAR_INFO m_HealthBar = { 0 };
-static BAR_INFO m_AirBar = { 0 };
-static BAR_INFO m_EnemyBar = { 0 };
+static BAR_INFO m_HealthBar = {};
+static BAR_INFO m_AirBar = {};
+static BAR_INFO m_EnemyBar = {};
 
 static void M_BarSetupHealth(void);
 static void M_BarSetupAir(void);

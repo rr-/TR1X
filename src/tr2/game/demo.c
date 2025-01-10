@@ -4,7 +4,7 @@
 #include "global/vars.h"
 
 static int32_t m_DemoIdx = 0;
-static INPUT_STATE m_OldDemoInputDB = { 0 };
+static INPUT_STATE m_OldDemoInputDB = {};
 
 static int32_t M_GetNextLevel(void);
 
@@ -35,7 +35,7 @@ int32_t Demo_ChooseLevel(int32_t demo_num)
 bool Demo_GetInput(void)
 {
     if (g_DemoCount == 0) {
-        m_OldDemoInputDB = (INPUT_STATE) { 0 };
+        m_OldDemoInputDB = (INPUT_STATE) {};
     }
     if (g_DemoCount >= MAX_DEMO_SIZE) {
         return false;
@@ -73,7 +73,6 @@ bool Demo_GetInput(void)
     }
 
     g_Input = (INPUT_STATE) {
-        0,
         // clang-format off
         .forward      = demo_input.forward,
         .back         = demo_input.back,

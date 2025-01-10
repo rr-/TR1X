@@ -37,7 +37,7 @@
 #include <stdio.h>
 #include <string.h>
 
-static LEVEL_INFO m_LevelInfo = { 0 };
+static LEVEL_INFO m_LevelInfo = {};
 static INJECTION_INFO *m_InjectionInfo = NULL;
 
 static void M_LoadFromFile(

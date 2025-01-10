@@ -929,7 +929,7 @@ void Output_CalculateLight(
     const ROOM *const r = &g_Rooms[room_num];
 
     int32_t brightest_shade = 0;
-    XYZ_32 brightest_pos = { 0 };
+    XYZ_32 brightest_pos = {};
 
     if (r->light_mode != 0) {
         const int32_t light_shade = m_RoomLightShades[r->light_mode];

@@ -78,8 +78,8 @@ void Option_Controls_Control(INVENTORY_ITEM *const item)
     if (m_Controller.state == UI_CONTROLS_STATE_EXIT) {
         Option_Controls_Shutdown();
     } else {
-        g_Input = (INPUT_STATE) { 0 };
-        g_InputDB = (INPUT_STATE) { 0 };
+        g_Input = (INPUT_STATE) {};
+        g_InputDB = (INPUT_STATE) {};
     }
 }
 

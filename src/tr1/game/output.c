@@ -61,16 +61,16 @@ static int32_t m_AnimatedTexturesOffset = 0;
 static CLOCK_TIMER m_WibbleTimer = { .type = CLOCK_TIMER_SIM };
 static CLOCK_TIMER m_AnimatedTexturesTimer = { .type = CLOCK_TIMER_SIM };
 static CLOCK_TIMER m_FadeTimer = { .type = CLOCK_TIMER_SIM };
-static int32_t m_WibbleTable[WIBBLE_SIZE] = { 0 };
-static int32_t m_ShadeTable[WIBBLE_SIZE] = { 0 };
-static int32_t m_RandTable[WIBBLE_SIZE] = { 0 };
+static int32_t m_WibbleTable[WIBBLE_SIZE] = {};
+static int32_t m_ShadeTable[WIBBLE_SIZE] = {};
+static int32_t m_RandTable[WIBBLE_SIZE] = {};
 
 static PHD_VBUF *m_VBuf = NULL;
 static PHD_UV *m_EnvMapUV = NULL;
 static int32_t m_DrawDistFade = 0;
 static int32_t m_DrawDistMax = 0;
-static RGB_F m_WaterColor = { 0 };
-static XYZ_32 m_LsVectorView = { 0 };
+static RGB_F m_WaterColor = {};
+static XYZ_32 m_LsVectorView = {};
 
 static int32_t m_LightningCount = 0;
 static LIGHTNING m_LightningTable[MAX_LIGHTNINGS];
@@ -807,7 +807,7 @@ void Output_DrawShadow(
         return;
     }
 
-    SHADOW_INFO shadow = { 0 };
+    SHADOW_INFO shadow = {};
     shadow.vertex_count = g_Config.visuals.enable_round_shadow ? 32 : 8;
 
     int32_t x0 = bounds->min.x;
@@ -1391,7 +1391,7 @@ void Output_SetPalette(const RGB_888 *palette, const size_t palette_size)
 RGB_888 Output_GetPaletteColor(uint16_t idx)
 {
     if (m_ColorPalette == NULL) {
-        return (RGB_888) { 0 };
+        return (RGB_888) { 0, 0, 0 };
     }
     return m_ColorPalette[idx];
 }

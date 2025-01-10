@@ -6,11 +6,11 @@
 
 #include <stddef.h>
 
-static MATRIX m_MatrixStack[MAX_MATRICES] = { 0 };
+static MATRIX m_MatrixStack[MAX_MATRICES] = {};
 static int32_t m_IMRate = 0;
 static int32_t m_IMFrac = 0;
 static MATRIX *m_IMMatrixPtr = NULL;
-static MATRIX m_IMMatrixStack[MAX_NESTED_MATRICES] = { 0 };
+static MATRIX m_IMMatrixStack[MAX_NESTED_MATRICES] = {};
 
 void Matrix_ResetStack(void)
 {

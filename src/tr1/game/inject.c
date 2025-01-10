@@ -1527,7 +1527,7 @@ static void M_ItemPositions(INJECTION *injection)
         const int16_t item_num = VFile_ReadS16(fp);
         const int16_t y_rot = VFile_ReadS16(fp);
 
-        GAME_VECTOR pos = { 0 };
+        GAME_VECTOR pos = {};
         if (injection->version > INJ_VERSION_4) {
             pos.x = VFile_ReadS32(fp);
             pos.y = VFile_ReadS32(fp);
@@ -1732,7 +1732,7 @@ void Inject_Cleanup(void)
 
 INJECTION_MESH_META Inject_GetRoomMeshMeta(const int32_t room_index)
 {
-    INJECTION_MESH_META summed_meta = { 0 };
+    INJECTION_MESH_META summed_meta = {};
     if (m_Injections == NULL) {
         return summed_meta;
     }

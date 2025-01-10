@@ -48,7 +48,7 @@ static PASSPORT_STATUS m_PassportStatus = {
 };
 
 static bool m_IsTextInit = false;
-static TEXTSTRING *m_Text[TEXT_NUMBER_OF] = { 0 };
+static TEXTSTRING *m_Text[TEXT_NUMBER_OF] = {};
 
 static REQUEST_INFO m_NewGameRequester = {
     .items_used = 0,
@@ -377,8 +377,8 @@ static void M_ShowSaves(PASSPORT_MODE pending_mode)
 {
     int32_t select = Requester_Display(&g_SavegameRequester);
     if (select == 0) {
-        g_Input = (INPUT_STATE) { 0 };
-        g_InputDB = (INPUT_STATE) { 0 };
+        g_Input = (INPUT_STATE) {};
+        g_InputDB = (INPUT_STATE) {};
     } else if (select > 0) {
         m_PassportStatus.mode = PASSPORT_MODE_BROWSE;
         g_GameInfo.current_save_slot = select - 1;
@@ -387,8 +387,8 @@ static void M_ShowSaves(PASSPORT_MODE pending_mode)
         g_InvMode != INV_SAVE_MODE && g_InvMode != INV_SAVE_CRYSTAL_MODE
         && g_InvMode != INV_LOAD_MODE) {
         m_PassportStatus.mode = PASSPORT_MODE_BROWSE;
-        g_Input = (INPUT_STATE) { 0 };
-        g_InputDB = (INPUT_STATE) { 0 };
+        g_Input = (INPUT_STATE) {};
+        g_InputDB = (INPUT_STATE) {};
     } else {
         m_PassportStatus.mode = PASSPORT_MODE_BROWSE;
     }
@@ -408,13 +408,13 @@ static void M_ShowSelectLevel(void)
         } else if (
             g_InvMode != INV_SAVE_MODE && g_InvMode != INV_SAVE_CRYSTAL_MODE
             && g_InvMode != INV_LOAD_MODE) {
-            g_Input = (INPUT_STATE) { 0 };
-            g_InputDB = (INPUT_STATE) { 0 };
+            g_Input = (INPUT_STATE) {};
+            g_InputDB = (INPUT_STATE) {};
         }
         m_PassportStatus.mode = PASSPORT_MODE_BROWSE;
     } else {
-        g_Input = (INPUT_STATE) { 0 };
-        g_InputDB = (INPUT_STATE) { 0 };
+        g_Input = (INPUT_STATE) {};
+        g_InputDB = (INPUT_STATE) {};
     }
 }
 
@@ -426,8 +426,8 @@ static void M_LoadGame(void)
     if (m_PassportStatus.mode == PASSPORT_MODE_BROWSE) {
         if (g_InputDB.menu_confirm) {
             M_InitSaveRequester(m_PassportStatus.page);
-            g_Input = (INPUT_STATE) { 0 };
-            g_InputDB = (INPUT_STATE) { 0 };
+            g_Input = (INPUT_STATE) {};
+            g_InputDB = (INPUT_STATE) {};
             m_PassportStatus.mode = PASSPORT_MODE_LOAD_GAME;
         }
     } else if (m_PassportStatus.mode == PASSPORT_MODE_LOAD_GAME) {
@@ -440,8 +440,8 @@ static void M_LoadGame(void)
                 Requester_ClearTextstrings(&g_SavegameRequester);
                 M_InitSelectLevelRequester();
                 m_PassportStatus.mode = PASSPORT_MODE_SELECT_LEVEL;
-                g_Input = (INPUT_STATE) { 0 };
-                g_InputDB = (INPUT_STATE) { 0 };
+                g_Input = (INPUT_STATE) {};
+                g_InputDB = (INPUT_STATE) {};
                 M_ShowSelectLevel();
             } else {
                 M_ShowSaves(PASSPORT_MODE_LOAD_GAME);
@@ -481,8 +481,8 @@ static void M_SelectLevel(void)
         Requester_ClearTextstrings(&m_SelectLevelRequester);
         M_InitSaveRequester(m_PassportStatus.page);
         m_PassportStatus.mode = PASSPORT_MODE_LOAD_GAME;
-        g_Input = (INPUT_STATE) { 0 };
-        g_InputDB = (INPUT_STATE) { 0 };
+        g_Input = (INPUT_STATE) {};
+        g_InputDB = (INPUT_STATE) {};
         M_ShowSaves(PASSPORT_MODE_LOAD_GAME);
     } else {
         M_ShowSelectLevel();
@@ -509,8 +509,8 @@ static void M_SaveGame(void)
     if (m_PassportStatus.mode == PASSPORT_MODE_BROWSE) {
         if (g_InputDB.menu_confirm) {
             M_InitSaveRequester(m_PassportStatus.page);
-            g_Input = (INPUT_STATE) { 0 };
-            g_InputDB = (INPUT_STATE) { 0 };
+            g_Input = (INPUT_STATE) {};
+            g_InputDB = (INPUT_STATE) {};
             m_PassportStatus.mode = PASSPORT_MODE_SAVE_GAME;
         }
     } else if (m_PassportStatus.mode == PASSPORT_MODE_SAVE_GAME) {
@@ -528,8 +528,8 @@ static void M_NewGame(void)
             && (g_Config.gameplay.enable_game_modes
                 || g_Config.profile.new_game_plus_unlock)) {
             M_InitNewGameRequester();
-            g_Input = (INPUT_STATE) { 0 };
-            g_InputDB = (INPUT_STATE) { 0 };
+            g_Input = (INPUT_STATE) {};
+            g_InputDB = (INPUT_STATE) {};
             m_PassportStatus.mode = PASSPORT_MODE_NEW_GAME;
         } else {
             g_GameInfo.save_initial_version = SAVEGAME_CURRENT_VERSION;
@@ -565,13 +565,13 @@ static void M_NewGame(void)
             } else if (
                 g_InvMode != INV_SAVE_MODE && g_InvMode != INV_SAVE_CRYSTAL_MODE
                 && g_InvMode != INV_LOAD_MODE) {
-                g_Input = (INPUT_STATE) { 0 };
-                g_InputDB = (INPUT_STATE) { 0 };
+                g_Input = (INPUT_STATE) {};
+                g_InputDB = (INPUT_STATE) {};
             }
             m_PassportStatus.mode = PASSPORT_MODE_BROWSE;
         } else {
-            g_Input = (INPUT_STATE) { 0 };
-            g_InputDB = (INPUT_STATE) { 0 };
+            g_Input = (INPUT_STATE) {};
+            g_InputDB = (INPUT_STATE) {};
         }
     }
 }
@@ -586,14 +586,14 @@ static void M_Restart(INVENTORY_ITEM *inv_item)
         }
     } else {
         inv_item->anim_direction = 1;
-        g_InputDB = (INPUT_STATE) { 0, .menu_right = 1 };
+        g_InputDB = (INPUT_STATE) { .menu_right = 1 };
     }
 }
 
 static void M_FlipRight(INVENTORY_ITEM *inv_item)
 {
-    g_Input = (INPUT_STATE) { 0 };
-    g_InputDB = (INPUT_STATE) { 0 };
+    g_Input = (INPUT_STATE) {};
+    g_InputDB = (INPUT_STATE) {};
 
     while (m_PassportStatus.page < PAGE_3) {
         m_PassportStatus.page++;
@@ -609,8 +609,8 @@ static void M_FlipRight(INVENTORY_ITEM *inv_item)
 
 static void M_FlipLeft(INVENTORY_ITEM *inv_item)
 {
-    g_Input = (INPUT_STATE) { 0 };
-    g_InputDB = (INPUT_STATE) { 0 };
+    g_Input = (INPUT_STATE) {};
+    g_InputDB = (INPUT_STATE) {};
 
     while (m_PassportStatus.page > PAGE_1) {
         m_PassportStatus.page--;
@@ -709,8 +709,8 @@ void Option_Passport_Control(INVENTORY_ITEM *inv_item)
 
     if (g_InputDB.menu_back) {
         if (g_InvMode == INV_DEATH_MODE) {
-            g_Input = (INPUT_STATE) { 0 };
-            g_InputDB = (INPUT_STATE) { 0 };
+            g_Input = (INPUT_STATE) {};
+            g_InputDB = (INPUT_STATE) {};
         } else {
             M_Close(inv_item);
         }

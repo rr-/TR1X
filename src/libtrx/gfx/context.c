@@ -33,7 +33,7 @@ typedef struct {
     GFX_RENDERER *renderer;
 } GFX_CONTEXT;
 
-static GFX_CONTEXT m_Context = { 0 };
+static GFX_CONTEXT m_Context = {};
 
 static bool M_IsExtensionSupported(const char *name);
 static void M_CheckExtensionSupport(const char *name);

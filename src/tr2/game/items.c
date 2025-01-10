@@ -17,7 +17,7 @@
 
 static int16_t m_NextItemFree;
 static int16_t m_MaxUsedItemCount = 0;
-static BOUNDS_16 m_InterpolatedBounds = { 0 };
+static BOUNDS_16 m_InterpolatedBounds = {};
 
 static OBJECT_BOUNDS M_ConvertBounds(const int16_t *bounds_in);
 

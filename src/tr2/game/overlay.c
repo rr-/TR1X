@@ -48,7 +48,7 @@ typedef struct {
     DISPLAY_PICKUP_PHASE phase;
 } DISPLAY_PICKUP;
 
-static DISPLAY_PICKUP m_Pickups[MAX_PICKUPS] = { 0 };
+static DISPLAY_PICKUP m_Pickups[MAX_PICKUPS] = {};
 static int32_t m_OldHitPoints = -1;
 static bool m_FlashState = false;
 static int32_t m_FlashCounter = 0;

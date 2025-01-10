@@ -725,7 +725,7 @@ static int M_UploadTexture(M_STATE *is, AVFrame *frame)
 
         if (pixels != NULL) {
             uint8_t *surf_planes[4] = { pixels, NULL, NULL, NULL };
-            int surf_linesize[4] = { 0, 0, 0, 0 };
+            int surf_linesize[4] = {};
             if (is->primary_surface_stride > 0) {
                 surf_linesize[0] = is->primary_surface_stride;
             } else {

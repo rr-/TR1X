@@ -52,8 +52,8 @@ typedef enum {
 #define DECIBEL_LUT_SIZE 512
 
 static float m_MasterVolume = 0.0f;
-static int32_t m_DecibelLUT[DECIBEL_LUT_SIZE] = { 0 };
-static SOUND_SLOT m_SoundSlots[SOUND_MAX_SLOTS] = { 0 };
+static int32_t m_DecibelLUT[DECIBEL_LUT_SIZE] = {};
+static SOUND_SLOT m_SoundSlots[SOUND_MAX_SLOTS] = {};
 
 static int32_t M_ConvertVolumeToDecibel(int32_t volume);
 static int32_t M_ConvertPanToDecibel(uint16_t pan);

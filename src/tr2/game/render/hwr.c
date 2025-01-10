@@ -33,9 +33,9 @@ typedef struct {
     int32_t env_map_texture;
 } M_PRIV;
 
-static VERTEX_INFO m_VBuffer[32] = { 0 };
-static GFX_3D_VERTEX m_VBufferGL[32] = { 0 };
-static GFX_3D_VERTEX m_HWR_VertexBuffer[MAX_VERTICES] = { 0 };
+static VERTEX_INFO m_VBuffer[32] = {};
+static GFX_3D_VERTEX m_VBufferGL[32] = {};
+static GFX_3D_VERTEX m_HWR_VertexBuffer[MAX_VERTICES] = {};
 static GFX_3D_VERTEX *m_HWR_VertexPtr = NULL;
 
 static void M_ShadeColor(
@@ -543,11 +543,12 @@ static const int16_t *M_InsertObjectG3_Sorted(
 
         int32_t num_points = 3;
         const PHD_VBUF *vtx[3] = {
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
+            &g_PhdVBuf[obj_ptr[0]],
+            &g_PhdVBuf[obj_ptr[1]],
+            &g_PhdVBuf[obj_ptr[2]],
         };
-        const int16_t color_idx = *obj_ptr++;
+        const int16_t color_idx = obj_ptr[3];
+        obj_ptr += 4;
 
         const int8_t clip_or = vtx[0]->clip | vtx[1]->clip | vtx[2]->clip;
         const int8_t clip_and = vtx[0]->clip & vtx[1]->clip & vtx[2]->clip;
@@ -620,12 +621,13 @@ static const int16_t *M_InsertObjectG4_Sorted(
 
         int32_t num_points = 4;
         const PHD_VBUF *const vtx[4] = {
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
+            &g_PhdVBuf[obj_ptr[0]],
+            &g_PhdVBuf[obj_ptr[1]],
+            &g_PhdVBuf[obj_ptr[2]],
+            &g_PhdVBuf[obj_ptr[3]],
         };
-        const int16_t color_idx = *obj_ptr++;
+        const int16_t color_idx = obj_ptr[4];
+        obj_ptr += 5;
 
         const int8_t clip_or =
             vtx[0]->clip | vtx[1]->clip | vtx[2]->clip | vtx[3]->clip;
@@ -699,11 +701,13 @@ static const int16_t *M_InsertObjectGT3_Sorted(
         }
 
         const PHD_VBUF *const vtx[3] = {
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
+            &g_PhdVBuf[obj_ptr[0]],
+            &g_PhdVBuf[obj_ptr[1]],
+            &g_PhdVBuf[obj_ptr[2]],
         };
-        const int16_t texture_idx = *obj_ptr++;
+        const int16_t texture_idx = obj_ptr[3];
+        obj_ptr += 4;
+
         const PHD_TEXTURE *const texture = &g_TextureInfo[texture_idx];
         const PHD_UV *const uv = texture->uv;
 
@@ -730,12 +734,14 @@ static const int16_t *M_InsertObjectGT4_Sorted(
         }
 
         const PHD_VBUF *const vtx[4] = {
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
+            &g_PhdVBuf[obj_ptr[0]],
+            &g_PhdVBuf[obj_ptr[1]],
+            &g_PhdVBuf[obj_ptr[2]],
+            &g_PhdVBuf[obj_ptr[3]],
         };
-        const int16_t texture_idx = *obj_ptr++;
+        const int16_t texture_idx = obj_ptr[4];
+        obj_ptr += 5;
+
         const PHD_TEXTURE *const texture = &g_TextureInfo[texture_idx];
 
         if (texture->draw_type != DRAW_OPAQUE && g_DiscardTransparent) {
@@ -1133,13 +1139,14 @@ static const int16_t *M_InsertObjectG3_ZBuffered(
     }
 
     for (int32_t i = 0; i < num; i++) {
-        const PHD_VBUF *vtx[3] = {
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-        };
-        const int16_t color_idx = *obj_ptr++;
         int32_t num_points = 3;
+        const PHD_VBUF *vtx[3] = {
+            &g_PhdVBuf[obj_ptr[0]],
+            &g_PhdVBuf[obj_ptr[1]],
+            &g_PhdVBuf[obj_ptr[2]],
+        };
+        const int16_t color_idx = obj_ptr[3];
+        obj_ptr += 4;
 
         const int8_t clip_or = vtx[0]->clip | vtx[1]->clip | vtx[2]->clip;
         const int8_t clip_and = vtx[0]->clip & vtx[1]->clip & vtx[2]->clip;
@@ -1208,14 +1215,15 @@ static const int16_t *M_InsertObjectG4_ZBuffered(
     }
 
     for (int32_t i = 0; i < num; i++) {
-        const PHD_VBUF *const vtx[4] = {
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-        };
-        const int16_t color_idx = *obj_ptr++;
         int32_t num_points = 4;
+        const PHD_VBUF *const vtx[4] = {
+            &g_PhdVBuf[obj_ptr[0]],
+            &g_PhdVBuf[obj_ptr[1]],
+            &g_PhdVBuf[obj_ptr[2]],
+            &g_PhdVBuf[obj_ptr[3]],
+        };
+        const int16_t color_idx = obj_ptr[4];
+        obj_ptr += 5;
 
         const int8_t clip_or =
             vtx[0]->clip | vtx[1]->clip | vtx[2]->clip | vtx[3]->clip;
@@ -1280,17 +1288,18 @@ static const int16_t *M_InsertObjectGT3_ZBuffered(
 {
     for (int32_t i = 0; i < num; i++) {
         const PHD_VBUF *const vtx[3] = {
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
+            &g_PhdVBuf[obj_ptr[0]],
+            &g_PhdVBuf[obj_ptr[1]],
+            &g_PhdVBuf[obj_ptr[2]],
         };
-        const PHD_TEXTURE *const texture = &g_TextureInfo[*obj_ptr++];
-        const PHD_UV *const uv = texture->uv;
+        const PHD_TEXTURE *const texture = &g_TextureInfo[obj_ptr[3]];
+        obj_ptr += 4;
 
         if (texture->draw_type != DRAW_OPAQUE && g_DiscardTransparent) {
             continue;
         }
 
+        const PHD_UV *const uv = texture->uv;
         if (texture->draw_type != DRAW_OPAQUE) {
             M_InsertGT3_Sorted(
                 renderer, vtx[0], vtx[1], vtx[2], texture, &uv[0], &uv[1],
@@ -1311,18 +1320,19 @@ static const int16_t *M_InsertObjectGT4_ZBuffered(
 {
     for (int32_t i = 0; i < num; i++) {
         const PHD_VBUF *const vtx[4] = {
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
-            &g_PhdVBuf[*obj_ptr++],
+            &g_PhdVBuf[obj_ptr[0]],
+            &g_PhdVBuf[obj_ptr[1]],
+            &g_PhdVBuf[obj_ptr[2]],
+            &g_PhdVBuf[obj_ptr[3]],
         };
-        const PHD_TEXTURE *const texture = &g_TextureInfo[*obj_ptr++];
-        const PHD_UV *const uv = texture->uv;
+        const PHD_TEXTURE *const texture = &g_TextureInfo[obj_ptr[4]];
+        obj_ptr += 5;
 
         if (texture->draw_type != DRAW_OPAQUE && g_DiscardTransparent) {
             continue;
         }
 
+        const PHD_UV *const uv = texture->uv;
         if (texture->draw_type != DRAW_OPAQUE) {
             M_InsertGT4_Sorted(
                 renderer, vtx[0], vtx[1], vtx[2], vtx[3], texture, sort_type);

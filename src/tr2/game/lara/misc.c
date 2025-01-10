@@ -1044,7 +1044,7 @@ void Lara_BaddieCollision(ITEM *lara_item, COLL_INFO *coll)
         return;
     }
 
-    int16_t roomies[MAX_BADDIE_COLLISION] = { 0 };
+    int16_t roomies[MAX_BADDIE_COLLISION] = {};
     int32_t roomies_count = 0;
 
     roomies[roomies_count++] = lara_item->room_num;

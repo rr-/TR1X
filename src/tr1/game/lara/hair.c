@@ -22,8 +22,8 @@
 
 static bool m_FirstHair = false;
 static GAME_OBJECT_ID m_LaraType = O_LARA;
-static HAIR_SEGMENT m_Hair[HAIR_SEGMENTS + 1] = { 0 };
-static XYZ_32 m_HVel[HAIR_SEGMENTS + 1] = { 0 };
+static HAIR_SEGMENT m_Hair[HAIR_SEGMENTS + 1] = {};
+static XYZ_32 m_HVel[HAIR_SEGMENTS + 1] = {};
 
 static int16_t M_GetRoom(int32_t x, int32_t y, int32_t z);
 

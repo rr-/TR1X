@@ -25,7 +25,7 @@ typedef enum {
     TEXT_NUMBER_OF = 7,
 } COMPASS_TEXT;
 
-static TEXTSTRING *m_Text[TEXT_NUMBER_OF] = { 0 };
+static TEXTSTRING *m_Text[TEXT_NUMBER_OF] = {};
 static int16_t m_CompassNeedle = 0;
 static int16_t m_CompassSpeed = 0;
 

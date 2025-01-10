@@ -547,7 +547,7 @@ bool Savegame_Legacy_LoadFromFile(MYFILE *fp, GAME_INFO *game_info)
     g_Lara.back_gun_type = LGT_UNKNOWN;
 
     Lara_InitialiseInventory(g_CurrentLevel);
-    SAVEGAME_LEGACY_ITEM_STATS item_stats = { 0 };
+    SAVEGAME_LEGACY_ITEM_STATS item_stats = {};
     M_Read(&item_stats, sizeof(SAVEGAME_LEGACY_ITEM_STATS));
     Inv_AddItemNTimes(O_PICKUP_ITEM_1, item_stats.num_pickup1);
     Inv_AddItemNTimes(O_PICKUP_ITEM_2, item_stats.num_pickup2);

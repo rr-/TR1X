@@ -34,6 +34,8 @@ void Gun_Pistols_SetArmInfo(LARA_ARM *const arm, const int32_t frame)
     } else if (Anim_TestAbsFrameRange(
                    frame, LF_G_RECOIL_START, LF_G_RECOIL_END)) {
         anim_idx = LA_PISTOLS_RECOIL;
+    } else {
+        return;
     }
 
     const OBJECT *const object = Object_GetObject(O_LARA_PISTOLS);

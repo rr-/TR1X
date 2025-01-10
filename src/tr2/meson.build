@@ -3,7 +3,7 @@ project(
   ['c'],
   default_options: [
     'c_std=c2x',
-    'warning_level=2',
+    'warning_level=3',
   ],
   meson_version: '>=1.3.0',
 )
@@ -19,15 +19,19 @@ c_compiler = meson.get_compiler('c')
 fs = import('fs')
 relative_dir = fs.relative_to(meson.current_source_dir(), meson.global_build_root())
 build_opts = [
-  '-Wall',
-  '-Wpedantic',
+  # common options
   '-Wno-unused',
   '-Wno-unused-parameter',
   '-Wno-microsoft-anon-tag',
+  '-Wno-gnu-binary-literal',
+  '-Wno-gnu-empty-initializer',
+  '-Wno-gnu-zero-variadic-macro-arguments',
   '-DMESON_BUILD',
   '-fms-extensions',
   '-fno-omit-frame-pointer',
+  # end of common options
   '-ffile-prefix-map=@0@/='.format(relative_dir),
+  '-DTR_VERSION=2',
 ] + trx.get_variable('defines')
 
 add_project_arguments(build_opts, language: 'c')

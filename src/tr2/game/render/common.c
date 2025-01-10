@@ -15,8 +15,8 @@
 #include <libtrx/memory.h>
 #include <libtrx/utils.h>
 
-static RENDERER m_Renderer_SW = { 0 };
-static RENDERER m_Renderer_HW = { 0 };
+static RENDERER m_Renderer_SW = {};
+static RENDERER m_Renderer_HW = {};
 static RENDERER *m_PreviousRenderer = NULL;
 static GFX_FADE_RENDERER *m_FadeRenderer = NULL;
 static GFX_2D_RENDERER *m_BackgroundRenderer = NULL;
@@ -27,7 +27,7 @@ static struct {
     const PHD_TEXTURE *texture;
     int32_t repeat_x;
     int32_t repeat_y;
-} m_Background = { 0 };
+} m_Background = {};
 
 static RENDERER *M_GetRenderer(void);
 static void M_ReuploadBackground(void);

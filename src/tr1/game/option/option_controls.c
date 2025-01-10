@@ -71,7 +71,7 @@ typedef struct {
 } MENU;
 
 static int32_t m_KeyMode = KM_INACTIVE;
-static TEXTSTRING *m_Text[TEXT_NUMBER_OF] = { 0 };
+static TEXTSTRING *m_Text[TEXT_NUMBER_OF] = {};
 static int32_t m_ResetTimer = 0;
 static int32_t m_ResetKeyMode = KM_INACTIVE;
 static int32_t m_ResetKeyDelay = 0;
@@ -660,8 +660,8 @@ CONTROL_MODE Option_Controls_Control(
             || (g_InputDB.menu_confirm && m_ControlMenu.cur_role == KC_TITLE)) {
             M_ShutdownText();
             m_KeyMode = KM_INACTIVE;
-            g_Input = (INPUT_STATE) { 0 };
-            g_InputDB = (INPUT_STATE) { 0 };
+            g_Input = (INPUT_STATE) {};
+            g_InputDB = (INPUT_STATE) {};
             return CM_PICK;
         }
 
@@ -754,8 +754,8 @@ CONTROL_MODE Option_Controls_Control(
         break;
     }
 
-    g_Input = (INPUT_STATE) { 0 };
-    g_InputDB = (INPUT_STATE) { 0 };
+    g_Input = (INPUT_STATE) {};
+    g_InputDB = (INPUT_STATE) {};
 
     m_ControlMenu.prev_row_num = m_ControlMenu.row_num;
 

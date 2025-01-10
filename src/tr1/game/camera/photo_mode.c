@@ -35,8 +35,8 @@
 static int32_t m_PhotoSpeed = 0;
 static int32_t m_OldFOV;
 static int32_t m_CurrentFOV;
-static CAMERA_INFO m_OldCamera = { 0 };
-static BOUNDS_32 m_WorldBounds = { 0 };
+static CAMERA_INFO m_OldCamera = {};
+static BOUNDS_32 m_WorldBounds = {};
 
 static int32_t M_GetShiftSpeed(int32_t val);
 static int32_t M_GetRotSpeed(void);

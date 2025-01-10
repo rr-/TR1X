@@ -13,7 +13,7 @@ typedef struct {
     UT_hash_handle hh;
 } M_HASH_ENTRY;
 
-static TEXTSTRING m_TextStrings[TEXT_MAX_STRINGS] = { 0 };
+static TEXTSTRING m_TextStrings[TEXT_MAX_STRINGS] = {};
 
 static GLYPH_INFO m_Glyphs[] = {
 #define GLYPH_DEFINE(text_, role_, width_, mesh_idx_, ...)                     \

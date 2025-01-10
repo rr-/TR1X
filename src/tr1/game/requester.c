@@ -202,7 +202,7 @@ int32_t Requester_Display(REQUEST_INFO *req)
 
     if (g_InputDB.menu_confirm) {
         if (req->is_blockable && req->items[req->requested].is_blocked) {
-            g_Input = (INPUT_STATE) { 0 };
+            g_Input = (INPUT_STATE) {};
             return 0;
         } else {
             Requester_ClearTextstrings(req);

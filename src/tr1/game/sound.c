@@ -50,12 +50,12 @@ typedef enum {
     SOUND_FLAG_RESTARTED = 1 << 2,
 } SOUND_FLAG;
 
-static SOUND_SLOT m_SFXPlaying[MAX_PLAYING_FX] = { 0 };
+static SOUND_SLOT m_SFXPlaying[MAX_PLAYING_FX] = {};
 static int32_t m_MasterVolume = 0;
 static int32_t m_MasterVolumeDefault = 0;
-static int16_t m_AmbientLookup[MAX_AMBIENT_FX] = { 0 };
+static int16_t m_AmbientLookup[MAX_AMBIENT_FX] = {};
 static int32_t m_AmbientLookupIdx = 0;
-static int m_DecibelLUT[DECIBEL_LUT_SIZE] = { 0 };
+static int m_DecibelLUT[DECIBEL_LUT_SIZE] = {};
 static bool m_SoundIsActive = false;
 
 static int32_t M_ConvertVolumeToDecibel(int volume);

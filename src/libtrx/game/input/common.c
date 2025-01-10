@@ -8,9 +8,9 @@
 
 #include <stdint.h>
 
-INPUT_STATE g_Input = { 0 };
-INPUT_STATE g_InputDB = { 0 };
-INPUT_STATE g_OldInputDB = { 0 };
+INPUT_STATE g_Input = {};
+INPUT_STATE g_InputDB = {};
+INPUT_STATE g_OldInputDB = {};
 
 static bool m_ListenMode = false;
 

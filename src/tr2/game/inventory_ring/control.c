@@ -202,8 +202,8 @@ static GAME_FLOW_COMMAND M_Control(INV_RING *const ring)
     if ((ring->mode == INV_SAVE_MODE || ring->mode == INV_LOAD_MODE
          || ring->mode == INV_DEATH_MODE)
         && !ring->is_pass_open) {
-        g_Input = (INPUT_STATE) { 0 };
-        g_InputDB = (INPUT_STATE) { 0, .menu_confirm = 1 };
+        g_Input = (INPUT_STATE) {};
+        g_InputDB = (INPUT_STATE) { .menu_confirm = 1 };
     }
 
     for (int32_t frame = 0; frame < INV_RING_FRAMES; frame++) {
@@ -247,8 +247,8 @@ static GAME_FLOW_COMMAND M_Control(INV_RING *const ring)
                 InvRing_MotionCameraPos(ring, INV_RING_CAMERA_START_HEIGHT);
                 InvRing_MotionRotation(
                     ring, -PHD_180, ring->ring_pos.rot.y + PHD_180);
-                g_Input = (INPUT_STATE) { 0 };
-                g_InputDB = (INPUT_STATE) { 0 };
+                g_Input = (INPUT_STATE) {};
+                g_InputDB = (INPUT_STATE) {};
             }
 
             if (g_InputDB.menu_confirm) {
@@ -281,8 +281,8 @@ static GAME_FLOW_COMMAND M_Control(INV_RING *const ring)
                     ring, 0,
                     -DEG_90 - ring->angle_adder * ring->current_object);
                 InvRing_MotionItemSelect(ring, inv_item);
-                g_Input = (INPUT_STATE) { 0 };
-                g_InputDB = (INPUT_STATE) { 0 };
+                g_Input = (INPUT_STATE) {};
+                g_InputDB = (INPUT_STATE) {};
 
                 switch (inv_item->object_id) {
                 case O_COMPASS_OPTION:
@@ -321,7 +321,7 @@ static GAME_FLOW_COMMAND M_Control(INV_RING *const ring)
                         InvRing_MotionCameraPitch(ring, 0x2000);
                         ring->motion.misc = 0x2000;
                     }
-                    g_InputDB = (INPUT_STATE) { 0 };
+                    g_InputDB = (INPUT_STATE) {};
                 } else if (ring->type == RT_MAIN) {
                     if (g_InvRing_Source[RT_KEYS].count > 0) {
                         InvRing_MotionSetup(
@@ -332,8 +332,8 @@ static GAME_FLOW_COMMAND M_Control(INV_RING *const ring)
                         InvRing_MotionCameraPitch(ring, 0x2000);
                         ring->motion.misc = 0x2000;
                     }
-                    g_Input = (INPUT_STATE) { 0 };
-                    g_InputDB = (INPUT_STATE) { 0 };
+                    g_Input = (INPUT_STATE) {};
+                    g_InputDB = (INPUT_STATE) {};
                 }
             } else if (
                 g_InputDB.back && ring->mode != INV_TITLE_MODE
@@ -348,8 +348,8 @@ static GAME_FLOW_COMMAND M_Control(INV_RING *const ring)
                         InvRing_MotionCameraPitch(ring, -0x2000);
                         ring->motion.misc = -0x2000;
                     }
-                    g_Input = (INPUT_STATE) { 0 };
-                    g_InputDB = (INPUT_STATE) { 0 };
+                    g_Input = (INPUT_STATE) {};
+                    g_InputDB = (INPUT_STATE) {};
                 } else if (ring->type == RT_MAIN) {
                     if (g_InvRing_Source[RT_OPTION].count > 0
                         && !g_GameFlow.lockout_option_ring) {
@@ -361,7 +361,7 @@ static GAME_FLOW_COMMAND M_Control(INV_RING *const ring)
                         InvRing_MotionCameraPitch(ring, -0x2000);
                         ring->motion.misc = -0x2000;
                     }
-                    g_InputDB = (INPUT_STATE) { 0 };
+                    g_InputDB = (INPUT_STATE) {};
                 }
             }
             break;
@@ -466,14 +466,14 @@ static GAME_FLOW_COMMAND M_Control(INV_RING *const ring)
                     inv_item->sprite_list = NULL;
                     InvRing_MotionSetup(
                         ring, RNG_CLOSING_ITEM, RNG_DESELECT, 0);
-                    g_Input = (INPUT_STATE) { 0 };
-                    g_InputDB = (INPUT_STATE) { 0 };
+                    g_Input = (INPUT_STATE) {};
+                    g_InputDB = (INPUT_STATE) {};
                     if (ring->mode == INV_LOAD_MODE
                         || ring->mode == INV_SAVE_MODE) {
                         InvRing_MotionSetup(
                             ring, RNG_CLOSING_ITEM, RNG_EXITING_INVENTORY, 0);
-                        g_Input = (INPUT_STATE) { 0 };
-                        g_InputDB = (INPUT_STATE) { 0 };
+                        g_Input = (INPUT_STATE) {};
+                        g_InputDB = (INPUT_STATE) {};
                     }
                 }
 
@@ -498,8 +498,8 @@ static GAME_FLOW_COMMAND M_Control(INV_RING *const ring)
                         InvRing_MotionSetup(
                             ring, RNG_CLOSING_ITEM, RNG_EXITING_INVENTORY, 0);
                     }
-                    g_Input = (INPUT_STATE) { 0 };
-                    g_InputDB = (INPUT_STATE) { 0 };
+                    g_Input = (INPUT_STATE) {};
+                    g_InputDB = (INPUT_STATE) {};
                 }
             }
             break;
@@ -510,8 +510,8 @@ static GAME_FLOW_COMMAND M_Control(INV_RING *const ring)
             InvRing_MotionSetup(ring, RNG_DESELECTING, RNG_OPEN, 16);
             InvRing_MotionRotation(
                 ring, 0, -DEG_90 - ring->angle_adder * ring->current_object);
-            g_Input = (INPUT_STATE) { 0 };
-            g_InputDB = (INPUT_STATE) { 0 };
+            g_Input = (INPUT_STATE) {};
+            g_InputDB = (INPUT_STATE) {};
             break;
 
         case RNG_CLOSING_ITEM: {
@@ -717,7 +717,7 @@ GAME_FLOW_COMMAND InvRing_Close(INV_RING *const ring)
     Output_UnloadBackground();
 
     // enable buffering
-    g_OldInputDB = (INPUT_STATE) { 0 };
+    g_OldInputDB = (INPUT_STATE) {};
 
     if (g_IsGameToExit) {
         gf_cmd = (GAME_FLOW_COMMAND) { .action = GF_EXIT_GAME };

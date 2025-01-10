@@ -51,7 +51,7 @@ typedef struct {
     int quantity;
 } GAME_FLOW_GIVE_ITEM_DATA;
 
-GAME_FLOW g_GameFlow = { 0 };
+GAME_FLOW g_GameFlow = {};
 
 static int32_t M_StringToEnumType(
     const char *const str, const STRING_TO_ENUM_TYPE *map);

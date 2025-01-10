@@ -26,8 +26,8 @@ static int32_t m_LevelPickups = 0;
 static int32_t m_LevelKillables = 0;
 static int32_t m_LevelSecrets = 0;
 static uint32_t m_SecretRoom = 0;
-static bool m_KillableItems[MAX_ITEMS] = { 0 };
-static bool m_IfKillable[O_NUMBER_OF] = { 0 };
+static bool m_KillableItems[MAX_ITEMS] = {};
+static bool m_IfKillable[O_NUMBER_OF] = {};
 
 #if USE_REAL_CLOCK
 static struct {
@@ -227,7 +227,7 @@ int32_t Stats_GetSecrets(void)
 
 bool Stats_CheckAllSecretsCollected(GAME_FLOW_LEVEL_TYPE level_type)
 {
-    TOTAL_STATS total_stats = { 0 };
+    TOTAL_STATS total_stats = {};
     Stats_ComputeTotal(level_type, &total_stats);
     return total_stats.player_secret_count >= total_stats.total_secret_count;
 }

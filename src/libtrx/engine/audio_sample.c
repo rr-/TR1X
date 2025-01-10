@@ -58,8 +58,8 @@ typedef struct {
 } AUDIO_AV_BUFFER;
 
 static int32_t m_LoadedSamplesCount = 0;
-static AUDIO_SAMPLE m_LoadedSamples[AUDIO_MAX_SAMPLES] = { 0 };
-static AUDIO_SAMPLE_SOUND m_Samples[AUDIO_MAX_ACTIVE_SAMPLES] = { 0 };
+static AUDIO_SAMPLE m_LoadedSamples[AUDIO_MAX_SAMPLES] = {};
+static AUDIO_SAMPLE_SOUND m_Samples[AUDIO_MAX_ACTIVE_SAMPLES] = {};
 
 static double M_DecibelToMultiplier(double db_gain);
 static bool M_RecalculateChannelVolumes(int32_t sound_id);
@@ -179,7 +179,7 @@ static bool M_Convert(const int32_t sample_id)
         int32_t dst_channels;
         int32_t dst_sample_rate;
         SwrContext *ctx;
-    } swr = { 0 };
+    } swr = {};
 
     int32_t error_code;
 

@@ -4,9 +4,9 @@
 
 int32_t g_FPSCounter = 0;
 
-int16_t g_SampleLUT[MAX_SAMPLES] = { 0 };
+int16_t g_SampleLUT[MAX_SAMPLES] = {};
 SAMPLE_INFO *g_SampleInfos = NULL;
-uint16_t g_MusicTrackFlags[MAX_CD_TRACKS] = { 0 };
+uint16_t g_MusicTrackFlags[MAX_CD_TRACKS] = {};
 
 bool g_IDelay = false;
 int32_t g_IDCount = 0;
@@ -20,14 +20,14 @@ int32_t g_PhdTop = 0;
 float g_FltResZ;
 float g_FltResZBuf;
 
-PHD_SPRITE g_PhdSpriteInfo[MAX_SPRITES] = { 0 };
-PHD_TEXTURE g_PhdTextureInfo[MAX_TEXTURES] = { 0 };
+PHD_SPRITE g_PhdSpriteInfo[MAX_SPRITES] = {};
+PHD_TEXTURE g_PhdTextureInfo[MAX_TEXTURES] = {};
 MATRIX *g_MatrixPtr = NULL;
-MATRIX g_W2VMatrix = { 0 };
+MATRIX g_W2VMatrix = {};
 
-LARA_INFO g_Lara = { 0 };
+LARA_INFO g_Lara = {};
 ITEM *g_LaraItem = NULL;
-CAMERA_INFO g_Camera = { 0 };
+CAMERA_INFO g_Camera = {};
 GAME_INFO g_GameInfo = { .override_gf_command = { .action = GF_NOOP }, 0 };
 int32_t g_SavedGamesCount = 0;
 int32_t g_SaveCounter = 0;
@@ -39,8 +39,8 @@ int32_t g_OverlayFlag = 0;
 int32_t g_HeightType = 0;
 
 ROOM *g_RoomInfo = NULL;
-OBJECT g_Objects[O_NUMBER_OF] = { 0 };
-STATIC_INFO g_StaticObjects[STATIC_NUMBER_OF] = { 0 };
+OBJECT g_Objects[O_NUMBER_OF] = {};
+STATIC_INFO g_StaticObjects[STATIC_NUMBER_OF] = {};
 RGBA_8888 *g_TexturePagePtrs[MAX_TEXTPAGES] = { NULL };
 int16_t g_RoomCount = 0;
 int32_t g_LevelItemCount = 0;
@@ -54,7 +54,7 @@ TEXTURE_RANGE *g_AnimTextureRanges = NULL;
 int16_t g_NumCineFrames = 0;
 int16_t g_CineFrame = -1;
 CINE_CAMERA *g_CineCamera = NULL;
-CINE_POSITION g_CinePosition = { 0 };
+CINE_POSITION g_CinePosition = {};
 int32_t g_NumberCameras = 0;
 int32_t g_NumberSoundEffects = 0;
 OBJECT_VECTOR *g_SoundEffectsTable = NULL;

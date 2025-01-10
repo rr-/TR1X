@@ -110,7 +110,7 @@ static void M_DecreaseResolutionOrBPP(void)
 
     g_Config.rendering.scaler--;
     Config_Write();
-    char mode_string[64] = { 0 };
+    char mode_string[64] = {};
     sprintf(mode_string, "Scaler: %d", g_Config.rendering.scaler);
     Overlay_DisplayModeInfo(mode_string);
 }
@@ -123,7 +123,7 @@ static void M_IncreaseResolutionOrBPP(void)
 
     g_Config.rendering.scaler++;
     Config_Write();
-    char mode_string[64] = { 0 };
+    char mode_string[64] = {};
     sprintf(mode_string, "Scaler: %d", g_Config.rendering.scaler);
     Overlay_DisplayModeInfo(mode_string);
 }

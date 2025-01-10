@@ -33,7 +33,7 @@
 ITEM *g_Items = NULL;
 int16_t g_NextItemActive = NO_ITEM;
 static int16_t m_NextItemFree = NO_ITEM;
-static BOUNDS_16 m_InterpolatedBounds = { 0 };
+static BOUNDS_16 m_InterpolatedBounds = {};
 static int16_t m_MaxUsedItemCount = 0;
 
 void Item_InitialiseArray(int32_t num_items)

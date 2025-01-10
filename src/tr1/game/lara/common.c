@@ -59,7 +59,7 @@ void Lara_SetDeathCameraTarget(const int16_t item_num)
 
 void Lara_Control(void)
 {
-    COLL_INFO coll = { 0 };
+    COLL_INFO coll = {};
 
     ITEM *item = g_LaraItem;
     const ROOM *const room = Room_Get(item->room_num);

@@ -98,7 +98,7 @@ static GRAPHICS_MENU m_GraphicsMenu = {};
 static bool m_IsTextInit = false;
 static bool m_HideArrowLeft = false;
 static bool m_HideArrowRight = false;
-static TEXTSTRING *m_Text[TEXT_NUMBER_OF] = { 0 };
+static TEXTSTRING *m_Text[TEXT_NUMBER_OF] = {};
 
 static void M_InitMenu(void);
 static void M_UpdateMenuVisible(void);

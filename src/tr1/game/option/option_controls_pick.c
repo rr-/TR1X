@@ -19,7 +19,7 @@ typedef enum {
     TEXT_OPTION_MAX = TEXT_CONTROLLER,
 } PICK_TEXT;
 
-static TEXTSTRING *m_Text[TEXT_NUMBER_OF] = { 0 };
+static TEXTSTRING *m_Text[TEXT_NUMBER_OF] = {};
 
 static void M_InitText(void);
 static void M_ShutdownText(void);
@@ -83,8 +83,8 @@ CONTROL_MODE Option_ControlsPick_Control(void)
     case TEXT_KEYBOARD:
         if (g_InputDB.menu_confirm) {
             M_ShutdownText();
-            g_Input = (INPUT_STATE) { 0 };
-            g_InputDB = (INPUT_STATE) { 0 };
+            g_Input = (INPUT_STATE) {};
+            g_InputDB = (INPUT_STATE) {};
             return CM_KEYBOARD;
         }
         break;
@@ -92,8 +92,8 @@ CONTROL_MODE Option_ControlsPick_Control(void)
     case TEXT_CONTROLLER:
         if (g_InputDB.menu_confirm) {
             M_ShutdownText();
-            g_Input = (INPUT_STATE) { 0 };
-            g_InputDB = (INPUT_STATE) { 0 };
+            g_Input = (INPUT_STATE) {};
+            g_InputDB = (INPUT_STATE) {};
             return CM_CONTROLLER;
         }
         break;

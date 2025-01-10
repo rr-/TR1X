@@ -22,7 +22,7 @@
 int32_t g_FlipTimer = 0;
 int32_t g_FlipEffect = -1;
 int32_t g_FlipStatus = 0;
-int32_t g_FlipMapTable[MAX_FLIP_MAPS] = { 0 };
+int32_t g_FlipMapTable[MAX_FLIP_MAPS] = {};
 
 static void M_TriggerMusicTrack(int16_t track, const TRIGGER *const trigger);
 static void M_AddFlipItems(ROOM *r);

@@ -33,7 +33,7 @@ void Option_Passport_Control(INVENTORY_ITEM *const item)
     switch (page) {
     case 0:
         if (g_GameFlow.load_save_disabled) {
-            g_InputDB = (INPUT_STATE) { 0, .right = 1 };
+            g_InputDB = (INPUT_STATE) { .right = 1 };
             break;
         }
 
@@ -51,8 +51,8 @@ void Option_Passport_Control(INVENTORY_ITEM *const item)
                 Requester_Shutdown(&g_LoadGameRequester);
                 m_PassportMode = PASSPORT_MODE_BROWSE;
             } else {
-                g_Input = (INPUT_STATE) { 0 };
-                g_InputDB = (INPUT_STATE) { 0 };
+                g_Input = (INPUT_STATE) {};
+                g_InputDB = (INPUT_STATE) {};
             }
         } else if (m_PassportMode == PASSPORT_MODE_BROWSE) {
             if (g_SavedGames != 0 && g_Inv_Mode != INV_SAVE_MODE) {
@@ -72,17 +72,17 @@ void Option_Passport_Control(INVENTORY_ITEM *const item)
                     g_GF_GameStrings[GF_S_GAME_PASSPORT_LOAD_GAME], 0, NULL, 0);
 
                 m_PassportMode = PASSPORT_MODE_LOAD_GAME;
-                g_Input = (INPUT_STATE) { 0 };
-                g_InputDB = (INPUT_STATE) { 0 };
+                g_Input = (INPUT_STATE) {};
+                g_InputDB = (INPUT_STATE) {};
             } else {
-                g_InputDB = (INPUT_STATE) { 0, .right = 1 };
+                g_InputDB = (INPUT_STATE) { .right = 1 };
             }
         }
         break;
 
     case 1:
         if (g_GameFlow.load_save_disabled) {
-            g_InputDB = (INPUT_STATE) { 0, .right = 1 };
+            g_InputDB = (INPUT_STATE) { .right = 1 };
             break;
         }
 
@@ -110,15 +110,15 @@ void Option_Passport_Control(INVENTORY_ITEM *const item)
                 }
                 m_PassportMode = PASSPORT_MODE_BROWSE;
             } else {
-                g_Input = (INPUT_STATE) { 0 };
-                g_InputDB = (INPUT_STATE) { 0 };
+                g_Input = (INPUT_STATE) {};
+                g_InputDB = (INPUT_STATE) {};
             }
         } else if (m_PassportMode == PASSPORT_MODE_BROWSE) {
             if (g_Inv_Mode == INV_DEATH_MODE) {
                 if (item->anim_direction == -1) {
-                    g_InputDB = (INPUT_STATE) { 0, .left = 1 };
+                    g_InputDB = (INPUT_STATE) { .left = 1 };
                 } else {
-                    g_InputDB = (INPUT_STATE) { 0, .right = 1 };
+                    g_InputDB = (INPUT_STATE) { .right = 1 };
                 }
                 break;
             }
@@ -145,8 +145,8 @@ void Option_Passport_Control(INVENTORY_ITEM *const item)
                     g_GF_GameStrings[GF_S_GAME_PASSPORT_SAVE_GAME], 0, NULL, 0);
 
                 m_PassportMode = PASSPORT_MODE_LOAD_GAME;
-                g_Input = (INPUT_STATE) { 0 };
-                g_InputDB = (INPUT_STATE) { 0 };
+                g_Input = (INPUT_STATE) {};
+                g_InputDB = (INPUT_STATE) {};
             } else if (g_GameFlow.play_any_level) {
                 Text_Remove(m_LevelText);
                 m_LevelText = NULL;
@@ -159,8 +159,8 @@ void Option_Passport_Control(INVENTORY_ITEM *const item)
                     0);
 
                 m_PassportMode = PASSPORT_MODE_SELECT_LEVEL;
-                g_Input = (INPUT_STATE) { 0 };
-                g_InputDB = (INPUT_STATE) { 0 };
+                g_Input = (INPUT_STATE) {};
+                g_InputDB = (INPUT_STATE) {};
             } else if (g_InputDB.menu_confirm) {
                 g_Inv_ExtraData[1] = LV_FIRST;
             }
@@ -205,8 +205,8 @@ void Option_Passport_Control(INVENTORY_ITEM *const item)
                 g_PasswordText1 = NULL;
             }
         }
-        g_Input = (INPUT_STATE) { 0 };
-        g_InputDB = (INPUT_STATE) { 0 };
+        g_Input = (INPUT_STATE) {};
+        g_InputDB = (INPUT_STATE) {};
     }
 
     if (g_InputDB.right) {
@@ -220,14 +220,14 @@ void Option_Passport_Control(INVENTORY_ITEM *const item)
             Text_Remove(g_PasswordText1);
             g_PasswordText1 = NULL;
         }
-        g_Input = (INPUT_STATE) { 0 };
-        g_InputDB = (INPUT_STATE) { 0 };
+        g_Input = (INPUT_STATE) {};
+        g_InputDB = (INPUT_STATE) {};
     }
 
     if (g_InputDB.menu_back) {
         if (g_Inv_Mode == INV_DEATH_MODE) {
-            g_Input = (INPUT_STATE) { 0 };
-            g_InputDB = (INPUT_STATE) { 0 };
+            g_Input = (INPUT_STATE) {};
+            g_InputDB = (INPUT_STATE) {};
         } else {
             if (page == 2) {
                 item->anim_direction = 1;
