@@ -82,7 +82,7 @@ jobs:
       - name: Build x86-64
         run: |
           BUILD_DIR=build-x86-64
-          BUILD_OPTIONS="src/tr2 --prefix=/tmp/TR2X.app --bindir=Contents/MacOS --cross-file tools/tr2/mac/x86-64_cross_file.txt --buildtype ${{ inputs.target }}"
+          BUILD_OPTIONS="src/tr2 --prefix=/tmp/TR2X.app --bindir=Contents/MacOS --cross-file tools/shared/mac/x86-64_cross_file.txt --buildtype ${{ inputs.target }}"
           meson setup $BUILD_DIR $BUILD_OPTIONS
           meson compile -C $BUILD_DIR
 
@@ -95,7 +95,7 @@ jobs:
           mv $BUNDLE_EXEC_DIR/TR2X_universal $BUNDLE_EXEC_DIR/TR2X
 
           # Update dynamic library links in the fused executable.
-          ./tools/tr2/mac/bundle_dylibs --links-only
+          ./tools/shared/mac/bundle_dylibs -a TR2X --links-only
 
       - name: Sign app bundle
         run: |
@@ -112,7 +112,7 @@ jobs:
         run: |
           KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
           IDENTITY=$(security find-identity -v -p codesigning $KEYCHAIN_PATH | awk -F'"' '{print $2}')
-          tools/tr2/mac/create_installer
+          tools/shared/mac/create_installer -a TR2X -i data/tr2/mac/icon.icns
           xattr -cr TR2X-Installer.dmg
           /usr/bin/codesign --force --options runtime -s "${IDENTITY}" --keychain $KEYCHAIN_PATH -v TR2X-Installer.dmg
           xcrun notarytool submit --wait --apple-id "$MACOS_APPLEID" --password "$MACOS_APP_PWD" --team-id "$MACOS_TEAMID" TR2X-Installer.dmg

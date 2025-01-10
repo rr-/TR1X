@@ -318,5 +318,5 @@ if host_machine.system() == 'darwin'
   install_subdir('../../data/tr2/ship/shaders', install_dir : 'Contents/Resources')
   install_data('../../data/tr2/mac/icon.icns', install_dir : 'Contents/Resources')
   install_data('../../data/tr2/mac/Info.plist', install_dir : 'Contents')
-  meson.add_install_script('../../tools/tr2/mac/bundle_dylibs')
+  meson.add_install_script('../../tools/shared/mac/bundle_dylibs', '-a', 'TR2X')
 endif
